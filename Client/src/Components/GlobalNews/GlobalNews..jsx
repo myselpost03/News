@@ -25,7 +25,7 @@ function GlobalNews() {
   const fetchBBCNews = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.29.135:5000/api/news/bbc"
+        "https://news.adaptable.app/api/news/bbc"
       );
       setBBCNews(response.data);
       //console.log(response.data)
@@ -37,7 +37,7 @@ function GlobalNews() {
   const fetchCNBCNews = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.29.135:5000/api/news/cnbc"
+        "https://news.adaptable.app/api/news/cnbc"
       );
       setCNBCNews(response.data);
     } catch (error) {
