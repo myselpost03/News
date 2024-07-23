@@ -49,7 +49,7 @@ const DesktopHomePage = () => {
     window.deferredPrompt = null;
   };
 
-  const handleQRCodeClick = () https://youtu.be/MGx7v-aeD30?si=fWZVu8WPhr7Huf9v=> {
+  const handleQRCodeClick = () => {
     // Display install prompt if available
     if (window.deferredPrompt) {
       window.deferredPrompt.prompt();
