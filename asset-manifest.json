@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/News.git/static/css/main.7636ad18.css",
+    "main.js": "/News.git/static/js/main.6ff9e839.js",
+    "static/js/787.829f2b79.chunk.js": "/News.git/static/js/787.829f2b79.chunk.js",
+    "static/media/mockup-1.png": "/News.git/static/media/mockup-1.94aa13027ca49a7c1f7d.png",
+    "static/media/notFound.jpg": "/News.git/static/media/notFound.235cdfd741d6b72e3137.jpg",
+    "static/media/logo.png": "/News.git/static/media/logo.b8ca07c8ad6d9042cce6.png",
+    "static/media/first-feature.jpg": "/News.git/static/media/first-feature.09a722dbe0fe0ffdf9d6.jpg",
+    "static/media/third-feature.jpg": "/News.git/static/media/third-feature.188d4545fe89a2498ad0.jpg",
+    "static/media/second-feature.jpg": "/News.git/static/media/second-feature.082fa1983c551b8ee768.jpg",
+    "static/media/contact.png": "/News.git/static/media/contact.d065d6b2800e86937c9a.png",
+    "static/media/fourth-feature.jpg": "/News.git/static/media/fourth-feature.171e49a49161c4ae7dd0.jpg",
+    "index.html": "/News.git/index.html",
+    "main.7636ad18.css.map": "/News.git/static/css/main.7636ad18.css.map",
+    "main.6ff9e839.js.map": "/News.git/static/js/main.6ff9e839.js.map",
+    "787.829f2b79.chunk.js.map": "/News.git/static/js/787.829f2b79.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7636ad18.css",
+    "static/js/main.6ff9e839.js"
+  ]
+}
