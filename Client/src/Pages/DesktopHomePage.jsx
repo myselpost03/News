@@ -4,7 +4,6 @@ import Navbar from "../Components/NavBar/NavBar";
 import mockup from "../Images/mockup-1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { BASE_URL } from "../Components/config";
 import "./DesktopHomePage.scss";
 
 const DesktopHomePage = () => {
@@ -50,7 +49,7 @@ const DesktopHomePage = () => {
     window.deferredPrompt = null;
   };
 
-  const handleQRCodeClick = () => {
+  const handleQRCodeClick = () https://youtu.be/MGx7v-aeD30?si=fWZVu8WPhr7Huf9v=> {
     // Display install prompt if available
     if (window.deferredPrompt) {
       window.deferredPrompt.prompt();
