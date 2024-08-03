@@ -268,6 +268,9 @@ const newsSources = [
   "https://www.brasilwire.com/feed/",
   "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/geral/?body=%7B%22layout%22:%22google-news%22%7D",
   "https://braziljournal.com/feed/",
+
+  //! Olympics trending
+  "https://nypost.com/olympics/feed/"
 ];
 
 //! Fetch RSS feed
@@ -524,6 +527,8 @@ app.get("/api/news/:source", async (req, res) => {
     brasilwire: 151,
     estadao: 152,
     braziljournal: 153,
+
+    olympics: 154
   };
 
   try {

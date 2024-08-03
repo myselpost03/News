@@ -1,6 +1,7 @@
 //! React imports
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
+import ReactGA from 'react-ga';
 
 //! Library import
 import axios from "axios";
@@ -64,17 +65,26 @@ function LocalNews() {
     }
   }, []);
 
+  const lastNotificationTime = useRef(0);
+
   useEffect(() => {
-    const interval = setInterval(() => {
+    const checkNotifications = () => {
+      const now = Date.now();
       if (document.visibilityState === "hidden" && combinedLocalNews.length > 0) {
-        const headlines = combinedLocalNews
-          .slice(0, 3)
-          .map((article) => article.title);
-        headlines.forEach((headline) => {
-          sendNotification("MySelpost", headline);
-        });
+        // Check if an hour has passed since the last notification
+        if (now - lastNotificationTime.current >= 3600000) {
+          const headlines = combinedLocalNews
+            .slice(0, 3)
+            .map((article) => article.title);
+          headlines.forEach((headline) => {
+            sendNotification("MySelpost", headline);
+          });
+          lastNotificationTime.current = now; // Update the last notification time
+        }
       }
-    }, 3600000); // 1 hour in milliseconds
+    };
+
+    const interval = setInterval(checkNotifications, 1000); // Check every second
 
     return () => clearInterval(interval);
   }, [combinedLocalNews]);
@@ -314,6 +324,11 @@ function LocalNews() {
   };
 
   const handleFactCheck = (newsArticle) => {
+    ReactGA.event({
+      category: 'User',
+      action: 'Click',
+      label: 'Fact Check Button'
+    });
     checkFactualClaims(newsArticle);
   };
 
@@ -347,6 +362,11 @@ function LocalNews() {
 
   const loadMoreCards = () => {
     setVisibleCards((prevVisibleCards) => prevVisibleCards + numOfCardsPerLoad);
+    ReactGA.event({
+      category: 'User',
+      action: 'Click',
+      label: 'Load More Button'
+    });
   };
 
   const renderNewsArticles = useCallback(
@@ -458,6 +478,11 @@ function LocalNews() {
   const [speakingArticle, setSpeakingArticle] = useState(null);
 
   const toggleSpeak = (description) => {
+    ReactGA.event({
+      category: 'User',
+      action: 'Click',
+      label: 'Article Audio Button'
+    });
     if (speaking) {
       stopSpeaking();
     } else {

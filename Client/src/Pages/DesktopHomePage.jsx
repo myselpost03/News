@@ -4,10 +4,11 @@ import Navbar from "../Components/NavBar/NavBar";
 import mockup from "../Images/mockup-1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import ReactGA from "react-ga";
 import "./DesktopHomePage.scss";
 
 const DesktopHomePage = () => {
-  const pwaUrl = "http://192.168.29.135:3000/";
+  const pwaUrl = "https://myselpost.com";
 
   useEffect(() => {
     // Listen for beforeinstallprompt event to show the install popup
@@ -50,6 +51,11 @@ const DesktopHomePage = () => {
   };
 
   const handleQRCodeClick = () => {
+    ReactGA.event({
+      category: 'User',
+      action: 'Scan',
+      label: 'QR Code Scanner'
+    });
     // Display install prompt if available
     if (window.deferredPrompt) {
       window.deferredPrompt.prompt();

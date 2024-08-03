@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactGA from "react-ga";
 import NationalMapsNews from "../NationalMapsNews/NationalMapsNews";
 import WorldMapsNews from "../WorldMapsNews/WorldMapsNews";
 import AlertPopup from "../AlertPopup/AlertPopup";
@@ -26,6 +27,7 @@ const TopTabs = () => {
     } else {
       setCountryText("Nation");
     }
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
   
 
@@ -35,6 +37,11 @@ const TopTabs = () => {
 
   const handleTabClick = (index) => {
     setActiveTab(index);
+    ReactGA.event({
+      category: 'Tabs',
+      action: 'Tab Clicked',
+      label: index === 0 ? 'National' : 'World'
+    });
   };
 
   return (

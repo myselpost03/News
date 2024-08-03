@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import DesktopHomePage from "./Pages/DesktopHomePage";
@@ -12,6 +11,7 @@ import MapsPage from "./Pages/MapsPage";
 import NewsTimerPage from "./Pages/NewsTimerPage";
 import WorldNewsPage from "./Pages/WorldNewsPage";
 import CameraNewsPage from "./Pages/CameraNewsPage";
+import OlympicsTrendingPage from "./Pages/OlympicsTrendingPage";
 import FirstTrendingPage from "./Pages/FirstTrendingPage";
 import SecondTrendingPage from "./Pages/SecondTrendingPage";
 import TechnologyPage from "./Pages/TechnologyPage";
@@ -78,6 +78,10 @@ const SplashScreen = () => {
                   <Route path="/camera-news" element={<CameraNewsPage />} />
                   <Route path="/news-timer" element={<NewsTimerPage />} />
                   <Route path="/maps-news" element={<MapsPage />} />
+                  <Route
+                    path="/olympics-trending"
+                    element={<OlympicsTrendingPage />}
+                  />
                   <Route
                     path="/first-trending"
                     element={<FirstTrendingPage />}

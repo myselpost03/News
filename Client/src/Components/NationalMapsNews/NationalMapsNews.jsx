@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import ReactGA from "react-ga";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./NationalMapsNews.scss";
@@ -16,6 +17,8 @@ const NationalMapsNews = () => {
 
   useEffect(() => {
     setIsMounted(true);
+
+    ReactGA.pageview(window.location.pathname + window.location.search);
 
     return () => {
       setIsMounted(false);
@@ -244,6 +247,12 @@ const NationalMapsNews = () => {
             const headlines = newsArticles.map((article) => article.title);
             const popup = marker.getPopup();
             showHeadlines(popup, location.name, headlines.slice(0, 20));
+
+            ReactGA.event({
+              category: 'Map Interaction',
+              action: 'National Marker Clicked',
+              label: location.name
+            });
           } catch (error) {
             console.error("Error fetching news:", error);
           }

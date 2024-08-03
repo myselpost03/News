@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
+import ReactGA from "react-ga";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -43,6 +44,12 @@ const NewsTimer = () => {
       default:
         setCountdown(0);
     }
+
+    ReactGA.event({
+      category: "News Timer",
+      action: "Select Timer Option",
+      label: `Selected ${option} min`,
+    });
   };
 
   useEffect(() => {
@@ -125,7 +132,7 @@ const NewsTimer = () => {
   }, [scrollIndex]);
 
   useEffect(() => {
-    if (countdown > 0) { 
+    if (countdown > 0) {
       const timer = setInterval(() => {
         setCountdown((prevCountdown) => {
           if (prevCountdown === 0) {
@@ -141,8 +148,7 @@ const NewsTimer = () => {
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [countdown]); 
-  
+  }, [countdown]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -176,9 +182,17 @@ const NewsTimer = () => {
     setShowAlert(false);
   };
 
+  const handleShare = (platform) => {
+    ReactGA.event({
+      category: "Share",
+      action: "Share Button Clicked",
+      label: `Shared on ${platform}`,
+    });
+  };
+
   return (
     <div className="news-timer">
-     {loading && <LoadingSpinner />}
+      {loading && <LoadingSpinner />}
       {showConfetti && (
         <ConfettiExplosion
           force={0.8}
@@ -211,9 +225,14 @@ const NewsTimer = () => {
                       <div className="select">
                         <select
                           value={selectedCustomOption}
-                          onChange={(e) =>
-                            setSelectedCustomOption(e.target.value)
-                          }
+                          onChange={(e) => {
+                            setSelectedCustomOption(e.target.value);
+                            ReactGA.event({
+                              category: "News Timer",
+                              action: "Select Custom Option",
+                              label: `Selected ${e.target.value}`,
+                            });
+                          }}
                         >
                           <option value="world">World</option>
                           <option value="india">India</option>
@@ -231,6 +250,7 @@ const NewsTimer = () => {
                             "Your news, your way. Swipe, read, discover with MySelpost!"
                           }
                           hashtag="#myselpost"
+                          onClick={() => handleShare('Facebook')}
                         >
                           <FacebookIcon size={18} round />
                         </FacebookShareButton>
@@ -240,6 +260,7 @@ const NewsTimer = () => {
                             "Your news, your way. Swipe, read, discover with MySelpost!"
                           }
                           hashtag="#myselpost"
+                          onClick={() => handleShare('Facebook')}
                         >
                           <WhatsappIcon
                             size={18}
@@ -253,6 +274,7 @@ const NewsTimer = () => {
                             "Your news, your way. Swipe, read, discover with MySelpost!"
                           }
                           hashtag="#myselpost"
+                          onClick={() => handleShare('Facebook')}
                         >
                           <TwitterIcon
                             size={18}

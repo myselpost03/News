@@ -76,6 +76,23 @@ $red: #FA7070;
   text-decoration: none;
 }
 
+.menu-olympics-trending-link{
+  display: flex;
+  flex-direction: row;
+  color: $white;
+  font-family: 'poppins', serif;
+  font-weight: bold;
+  text-decoration: none;
+  padding-left: 1%;
+  align-self: center;
+  font-size: 0.95rem;
+}
+
+img.flame{
+  width: 20%;
+  height: 20%;
+}
+
 .menu-trending-item1-link{
   color: $white;
   font-family: 'poppins', serif;

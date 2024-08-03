@@ -72,6 +72,33 @@
     </noscript>
     <title>MySelpost | Instant, Fact-Checked, Location-Based News</title>
     <script>
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      gtag("js", new Date());
+      gtag("config", "G-WNC7H7TTW2");
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("install-button")
+          .addEventListener("click", function () {
+            gtag("event", "button_click", {
+              event_category: "Button",
+              event_label: "Install Button",
+            });
+          });
+
+        document
+          .getElementById("cancel-button")
+          .addEventListener("click", function () {
+            gtag("event", "button_click", {
+              event_category: "Button",
+              event_label: "Cancel Button",
+            });
+          });
+      });
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
           navigator.serviceWorker

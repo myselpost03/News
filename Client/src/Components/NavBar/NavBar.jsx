@@ -1,20 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Logo from "../../Images/logo.png";
-import './NavBar.scss';
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import ReactGA from "react-ga";
+import Logo from "../../Images/trending-logo.png";
+import "./NavBar.scss";
 
 const NavBar = () => {
+  const location = useLocation();
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location]);
+
+  
   return (
     <nav className="desktop-navbar">
       <div className="desktop-logo">
         <img src={Logo} alt="platform logo" />
-        <h1 className="brand-name">MySelpost</h1>
+        
+        <h1 className="brand-name">
+          MySelpost</h1>
       </div>
       <div className="desktop-tabs">
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/features">Features</Link></li>
-          <li><Link to="/contact-us">Contact Us</Link></li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/features">Features</Link>
+          </li>
+          <li>
+            <Link to="/contact-us">Contact Us</Link>
+          </li>
         </ul>
       </div>
     </nav>

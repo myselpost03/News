@@ -3,7 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./WorldMapsNews.scss";
 import axios from "axios";
-
+import ReactGA from "react-ga";
 import location from "../../Images/location.png";
 
 import { BASE_URL } from "../config";
@@ -15,6 +15,8 @@ const WorldMapsNews = () => {
 
   useEffect(() => {
     setIsMounted(true);
+
+    ReactGA.pageview(window.location.pathname + window.location.search);
 
     return () => {
       setIsMounted(false);
@@ -102,6 +104,12 @@ const WorldMapsNews = () => {
             const headlines = newsArticles.map((article) => article.title);
             const popup = marker.getPopup();
             showHeadlines(popup, location.name, headlines.slice(0, 20));
+
+            ReactGA.event({
+              category: 'Map Interaction',
+              action: 'World Marker Clicked',
+              label: location.name
+            });
           } catch (error) {
             console.error("Error fetching news:", error);
           }

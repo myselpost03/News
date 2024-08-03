@@ -4,7 +4,7 @@ import LocalNews from "../Components/LocalNews/LocalNews";
 import BottomTabs from "../Components/BottomTabs/BottomTabs";
 import "./HomePage.scss";
 
-import logo from "../Images/logo.png";
+import logo from "../Images/trending-logo.png";
 
 const HomePage = () => {
   return (

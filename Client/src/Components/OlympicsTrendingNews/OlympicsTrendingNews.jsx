@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import ReactGA from 'react-ga';
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,7 @@ import { LOCATION_URL } from "../location";
 
 import "../LocalNews/LocalNews";
 
-const WorldNews = () => {
+const OlympicsTrendingNews = () => {
   const [animating, setAnimating] = useState(false);
   const [factChecking, setFactChecking] = useState(false);
   const [country, setCountry] = useState(null);
@@ -53,44 +52,38 @@ const WorldNews = () => {
     }
   }, []);
 
-  const [combinedWorldNews, setCombinedWorldNews] = useState([]);
+  const [combinedOlympicsTrendingNews, setCombinedOlympicsTrendingNews] = useState(
+    []
+  );
   const [isLoading, setIsLoading] = useState(true);
 
-  //! Fetch news data
   const fetchData = useCallback(async () => {
     try {
       setIsLoading(true);
       let responseArray;
       if (country) {
         responseArray = await Promise.all([
-          axios.get(`${BASE_URL}/news/thehindu`),
-          axios.get(`${BASE_URL}/news/rtworld`),
-          axios.get(`${BASE_URL}/news/scpost`),
-          axios.get(`${BASE_URL}/news/guardianworld`),
-          axios.get(`${BASE_URL}/news/independentworld`),
-          axios.get(`${BASE_URL}/news/nprworld`),
-          axios.get(`${BASE_URL}/news/newsweek`),
+          axios.get(`${BASE_URL}/news/olympics`),
         ]);
       } else {
-        setCombinedWorldNews([]);
+        setCombinedOlympicsTrendingNews([]);
         setIsLoading(false);
         return;
       }
 
-     
 
       const combinedNews = responseArray.flatMap(({ data }, index) => {
-        let countryName;
+        let topic;
         if (country) {
-          countryName = "World";
+          topic = "Olympics";
         } else {
-          countryName = "World";
+          topic = "Olympics";
         }
-        return combineNews(data, countryName);
-        
+
+        return combineNews(data, topic)
       });
-     
-      setCombinedWorldNews(combinedNews);
+
+      setCombinedOlympicsTrendingNews(combinedNews);
     } catch (error) {
       console.error("Error fetching news:", error);
     } finally {
@@ -205,11 +198,6 @@ const WorldNews = () => {
   };
 
   const handleFactCheck = (newsArticle) => {
-    ReactGA.event({
-      category: 'User',
-      action: 'Click',
-      label: 'Global News Fact Check Button'
-    });
     checkFactualClaims(newsArticle);
   };
 
@@ -243,6 +231,12 @@ const WorldNews = () => {
   //! Render news articles
   const renderNewsArticles = useCallback(
     (articles) => {
+      // Check if articles is defined and is an array
+      if (!Array.isArray(articles)) {
+        console.error("Articles data is not valid:", articles);
+        return null;
+      }
+
       return sortArticlesByDate(articles)
         .slice(cardsCounter, cardsCounter + visibleCards)
         .map((article, index) => (
@@ -266,7 +260,12 @@ const WorldNews = () => {
               </div>
             </div>
             <div className="news__card__btm">
-              <h3 className="news__card__we">{article.title}</h3>
+              <h3 className="news__card__we">
+                {article.title ===
+                "Translation failed. Default translation provided."
+                  ? article.originalTitle
+                  : article.title}
+              </h3>
               <p
                 className={
                   article.description.length > 120
@@ -343,16 +342,11 @@ const WorldNews = () => {
     return articles.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-      return dateB - dateA;
+      return dateA - dateB;
     });
   }, []);
 
   const loadMoreCards = () => {
-    ReactGA.event({
-      category: 'User',
-      action: 'Click',
-      label: 'Load More Button'
-    });
     setVisibleCards((prevVisibleCards) => prevVisibleCards + numOfCardsPerLoad);
   };
 
@@ -360,11 +354,6 @@ const WorldNews = () => {
   const [speakingArticle, setSpeakingArticle] = useState(null);
 
   const toggleSpeak = (description) => {
-    ReactGA.event({
-      category: 'User',
-      action: 'Click',
-      label: 'Global News Audio Button'
-    });
     if (speaking) {
       stopSpeaking();
     } else {
@@ -396,8 +385,8 @@ const WorldNews = () => {
           <LoadingSpinner />
         ) : (
           <>
-            {renderNewsArticles(combinedWorldNews)}
-            {combinedWorldNews.length > visibleCards && (
+            {renderNewsArticles(combinedOlympicsTrendingNews)}
+            {combinedOlympicsTrendingNews.length > visibleCards && (
               <button className="load-more-btn" onClick={loadMoreCards}>
                 Load More
               </button>
@@ -409,4 +398,4 @@ const WorldNews = () => {
   );
 };
 
-export default WorldNews;
+export default OlympicsTrendingNews;

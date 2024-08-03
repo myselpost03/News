@@ -14,6 +14,8 @@ import { BASE_URL } from "../config";
 import GuidelinesBox from "../GuidelinesBox/GuidelinesBox";
 import "./CameraNews.scss";
 
+import ReactGA from 'react-ga';
+
 const CameraNews = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,11 @@ const CameraNews = () => {
 
   //! Capture image
   const handleCapture = async () => {
+    ReactGA.event({
+      category: "Camera News",
+      action: "Click",
+      label: "Capture Button",
+    });
     if (showGuidelineAlert) {
       setShowGuidelineAlert(false);
       return;

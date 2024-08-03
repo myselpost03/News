@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./FeedbackForm.scss";
 import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "../config";
+import ReactGA from 'react-ga';
 import { Rating } from "react-simple-star-rating";
 import axios from "axios";
 
@@ -16,6 +17,11 @@ const FeedbackPage = () => {
 
   const handleRating = (rate) => {
     setRating(rate);
+    ReactGA.event({
+      category: "Feedback Form",
+      action: "Rating",
+      label: "Rating Star",
+    });
   };
 
   const handleNameChange = (event) => {
@@ -48,6 +54,11 @@ const FeedbackPage = () => {
   };
 
   const handleSubmit = async () => {
+    ReactGA.event({
+      category: "Feedback Form",
+      action: "Click",
+      label: "Submit Button",
+    });
     try {
       setIsSubmitting(true);
       await axios.post(`${BASE_URL}/feedbacks`, {

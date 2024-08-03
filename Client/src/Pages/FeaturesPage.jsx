@@ -4,6 +4,7 @@ import mockup1 from "../Images/first-feature.jpg";
 import mockup2 from "../Images/second-feature.jpg";
 import mockup3 from "../Images/third-feature.jpg";
 import mockup4 from "../Images/fourth-feature.jpg";
+import ReactGA from 'react-ga';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./FeaturesPage.scss";
@@ -44,6 +45,11 @@ const FeaturesPage = () => {
 
   const handleNextFeature = () => {
     setCurrentFeatureIndex((prevIndex) => (prevIndex + 1) % features.length);
+    ReactGA.event({
+      category: "Features Page",
+      action: "Click",
+      label: "Next Button",
+    });
   };
 
   const handlePreviousFeature = () => {
