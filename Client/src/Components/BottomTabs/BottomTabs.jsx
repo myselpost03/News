@@ -40,14 +40,14 @@ function BottomTabs() {
       >
         <FontAwesomeIcon icon={faEarthAmericas} />
       </Link>
-      <Link
+      {/*<Link
         to="/camera-news"
         className={`tab-item ${
           location.pathname === "/camera-news" ? "active" : ""
         }`}
       >
         <FontAwesomeIcon icon={faCamera} />
-      </Link>
+      </Link>*/}
       <Link
         to="/news-timer"
         className={`tab-item ${

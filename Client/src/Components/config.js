@@ -1,1 +1,1 @@
-export const BASE_URL = "https://news.adaptable.app/api";
+export const BASE_URL = "https://news-platform.adaptable.app/api";

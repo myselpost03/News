@@ -17,7 +17,7 @@ $poppins: "poppins";
 }
 
 .camera-container {
-  padding: 60% 25% 0 0;
+  padding: 55% 9% 0 0;
 }
 
 img.uploaded-img {
@@ -28,6 +28,7 @@ img.uploaded-img {
 .webcam-video {
   width: 50%;
   height: 30%;
+  margin: -25% 0 0 35%;
 }
 
 img.captured-img {
@@ -51,6 +52,7 @@ p.browsing-artc {
   padding: 0.3rem;
   font-weight: bold;
   font-size: 1rem;
+  margin: 5% 0 0 35%
 }
 
 .disabled-capture {

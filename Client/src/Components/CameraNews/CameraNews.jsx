@@ -109,24 +109,58 @@ const CameraNews = () => {
 
   //! Fetch matching article from captured image
   const fetchMatchingArticles = async (text) => {
+    const sources = [
+      "indianews", "ndtvnews", "zeenews",
+      "cbsnews", "huffpost", "cnnnews", "lanews",
+      "techcrunch", "lifehacker", "wired", "verge", "zdnet", "gadget360",
+      "delhi", "bangalore", "mumbai", "chennai", "hyderabad", "kochi", "kolkata", "madurai", "kozhikode", "mangaluru", "puducherry", "thiruvananthapuram", "tiruchirapalli", "vijaywada", "himachalpradesh", "haryana", "jammukashmir", "punjab", "jaipur", "surat", "varanasi", "ahmedabad", "hyderabad", "guwahati", "goa", "patna", "ranchi", "kanpur", "hubli", "bhopal",
+      "texas", "newyork", "mississippi", "florida", "washington", "montana", "lasvegas", "california", "nebraska", "northdakota", "denver", "southcarolina", "indiana",
+      "jakarta", "bandung", "surabaya", "bali", "sumatra",
+      "havana", "santiago", "pinardelrio", "matanzas",
+      "london", "manchester", "birmingham", "glasgow", "wales", "scotland", "northernireland",
+      "newzealand", "uk", "us", "australia", "india", "china", "russia", "argentina", "israel", "saudiarabia", "southafrica", "turkey", "srilanka", "canada", "denmark", "france", "japan", "germany", "bangladesh", "pakistan", "nepal", "myanmar", "indonesia", "brazil", "nigeria", "greenland", "mexico",
+      "bbc", "guardian", "independent", "telegraph",
+      "granma",
+      "thehindu", "scpost", "rtworld", "guardianworld", "independentworld", "nprworld", "newsweek",
+      "marketbusiness", "ibtimes", "vox", "fortune", "businessinsider",
+      "espn", "fourfourtwo", "eurosport", "cbssport",
+      "statnews", "kffhealth", "medpagetoday", "theconversation",
+      "spacenews", "livescience", "physics", "newsscientist",
+      "etonline", "billboard", "hollywoodreporter", "deadline", "variety",
+      "fashionrogue", "businessofffashion", "glamour", "glaziamagazine", "coveteur",
+      "euromaid", "apnews", "bbcukraine", "nytukraine",
+      "apisrael", "guardianisrael", "jpost", "bbcisrael",
+      "insidehigh", "theconversationeducation", "educationnext", "hechingerreport",
+      "brazilnews", "brasilwire", "estadao", "braziljournal",
+      "olympics"
+    ];
+  
+    let allMatchingArticles = [];
+  
     try {
-      const response = await axios.get(`${BASE_URL}/news/techcrunch`);
-      const matchingArticles = response.data.filter((article) => {
-        const titleWords = article.title.toLowerCase().split(" ");
-        const descriptionWords = article.description.toLowerCase().split(" ");
-        const keywords = extractKeywords(text);
-        const foundInTitle = titleWords.some((word) =>
-          keywords.includes(word.toLowerCase())
-        );
-        const foundInDescription = descriptionWords.some((word) =>
-          keywords.includes(word.toLowerCase())
-        );
-        return foundInTitle || foundInDescription;
-      });
-
-      setMatchingArticles(matchingArticles);
-
-      if (matchingArticles.length > 0) {
+      for (const source of sources) {
+        const response = await axios.get(`${BASE_URL}/news/${source}`);
+        const articles = response.data;
+  
+        const matchingArticles = articles.filter((article) => {
+          const titleWords = article.title.toLowerCase().split(" ");
+          const descriptionWords = article.description.toLowerCase().split(" ");
+          const keywords = extractKeywords(text);
+          const foundInTitle = titleWords.some((word) =>
+            keywords.includes(word.toLowerCase())
+          );
+          const foundInDescription = descriptionWords.some((word) =>
+            keywords.includes(word.toLowerCase())
+          );
+          return foundInTitle || foundInDescription;
+        });
+  
+        allMatchingArticles = [...allMatchingArticles, ...matchingArticles];
+      }
+  
+      setMatchingArticles(allMatchingArticles);
+  
+      if (allMatchingArticles.length > 0) {
         toast.success("Found related articles!");
       } else {
         toast.error(
@@ -137,6 +171,7 @@ const CameraNews = () => {
       console.error("Error fetching articles:", error);
     }
   };
+  
 
   const handleManualInput = () => {
     setManualInput(true);
@@ -163,6 +198,10 @@ const CameraNews = () => {
     );
   };
 
+  const videoConstraints = {
+    facingMode: "environment", 
+  };
+
   return (
     <div className="camera-news-cont">
       {showGuidelineAlert && (
@@ -171,6 +210,7 @@ const CameraNews = () => {
           li1="Ensure good lighting conditions."
           li2="Avoid capturing blurry images."
           li3="Keep the camera steady while capturing."
+          li4="There must be text in image."
           onClose={() => setShowGuidelineAlert(false)}
         />
       )}
@@ -181,6 +221,7 @@ const CameraNews = () => {
             audio={false}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
+            videoConstraints={videoConstraints}
             onUserMediaError={() => setCameraWorking(false)}
             onUserMedia={() => setCameraWorking(true)}
             className="webcam-video"
