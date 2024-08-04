@@ -65,27 +65,18 @@ function LocalNews() {
     }
   }, []);
 
-  const lastNotificationTime = useRef(0);
-
   useEffect(() => {
-    const checkNotifications = () => {
-      const now = Date.now();
-      if (document.visibilityState === "hidden" && combinedLocalNews.length > 0) {
-        // Check if an hour has passed since the last notification
-        if (now - lastNotificationTime.current >= 3600000) {
-          const headlines = combinedLocalNews
-            .slice(0, 3)
-            .map((article) => article.title);
-          headlines.forEach((headline) => {
-            sendNotification("MySelpost", headline);
-          });
-          lastNotificationTime.current = now; // Update the last notification time
-        }
+    const interval = setInterval(() => {
+      if (combinedLocalNews.length > 0) {
+        const headlines = combinedLocalNews
+          .slice(0, 3)
+          .map((article) => article.title);
+        headlines.forEach((headline) => {
+          sendNotification("MySelpost", headline);
+        });
       }
-    };
-
-    const interval = setInterval(checkNotifications, 1000); // Check every second
-
+    }, 3600000); // 1 hour in milliseconds
+  
     return () => clearInterval(interval);
   }, [combinedLocalNews]);
 
