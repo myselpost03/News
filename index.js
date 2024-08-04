@@ -9,9 +9,7 @@ import webpush from "web-push";
 
 const app = express();
 
-app.use(cors({
-  origin: 'https://myselpost.com',  // Replace with your client’s URL
-}));
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 

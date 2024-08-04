@@ -59,9 +59,16 @@ self.addEventListener("push", (event) => {
     body: body,
   };
 
-  event.waitUntil(self.registration.showNotification(title, options));
+//  event.waitUntil(self.registration.showNotification(title, options));
 
-  
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+      .then(() => {
+        // Play notification sound
+        const audio = new Audio('/Client/src/Sounds/notification.mp3');
+        audio.play();
+      })
+  );
 });
 
 //! Show push notification with message
