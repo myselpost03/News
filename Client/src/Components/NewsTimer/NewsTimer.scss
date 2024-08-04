@@ -215,3 +215,28 @@ button.read-in-mins {
   background-color: $black;
   color: $white;
 }
+
+.option-disabled {
+  padding: 3px 16px;
+  margin-right: 10px;
+  background-color: $selection-color;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  font-family: "poppins", serif;
+  font-size: 0.8rem;
+  opacity: 0.5
+}
+
+.option-enabled {
+  padding: 3px 16px;
+  margin-right: 10px;
+  background-color: $selection-color;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  font-family: "poppins", serif;
+  font-size: 0.8rem;
+}

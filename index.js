@@ -192,7 +192,7 @@ const newsSources = [
 
   //! UK news
   "https://feeds.bbci.co.uk/news/rss.xml",
-  "https://www.theguardian.com/uk-news/rss",
+  "https://www.thesun.co.uk/feed/",
   "https://www.independent.co.uk/rss",
   "https://www.telegraph.co.uk/rss.xml",
   "https://en.granma.cu/feed",
@@ -201,10 +201,9 @@ const newsSources = [
   "https://www.thehindu.com/news/international/?service=rss",
   "https://www.scmp.com/rss/2/feed",
   "https://www.rt.com/rss/news/",
-  "https://www.theguardian.com/world/rss",
+  "https://www.straitstimes.com/news/world/rss.xml",
   "https://www.independent.co.uk/news/world/rss",
-  "https://feeds.npr.org/1004/rss.xml",
-  "https://www.newsweek.com/rss",
+  "https://tass.com/rss/v2.xml",
 
   //! Business news
   "https://marketbusinessnews.com/feed/",
@@ -270,7 +269,9 @@ const newsSources = [
   "https://braziljournal.com/feed/",
 
   //! Olympics trending
-  "https://nypost.com/olympics/feed/"
+  "https://nypost.com/olympics/feed/",
+
+
 ];
 
 //! Fetch RSS feed
@@ -473,62 +474,64 @@ app.get("/api/news/:source", async (req, res) => {
     guardianworld: 107,
     independentworld: 108,
     nprworld: 109,
-    newsweek: 110,
+   
 
-    marketbusiness: 111,
-    ibtimes: 112,
-    vox: 113,
-    fortune: 114,
-    businessinsider: 115,
+    marketbusiness: 110,
+    ibtimes: 111,
+    vox: 112,
+    fortune: 113,
+    businessinsider: 114,
 
-    espn: 116,
-    fourfourtwo: 117,
-    eurosport: 118,
-    cbssport: 119,
+    espn: 115,
+    fourfourtwo: 116,
+    eurosport: 117,
+    cbssport: 118,
 
-    statnews: 120,
-    kffhealth: 121,
-    medpagetoday: 122,
-    theconversation: 123,
+    statnews: 119,
+    kffhealth: 120,
+    medpagetoday: 121,
+    theconversation: 122,
 
-    spacenews: 124,
-    livescience: 125,
-    physics: 126,
-    newsscientist: 127,
+    spacenews: 123,
+    livescience: 124,
+    physics: 125,
+    newsscientist: 126,
 
-    etonline: 128,
-    billboard: 129,
-    hollywoodreporter: 130,
-    deadline: 131,
-    variety: 132,
+    etonline: 127,
+    billboard: 128,
+    hollywoodreporter: 129,
+    deadline: 130,
+    variety: 131,
 
-    fashionrogue: 133,
-    businessofffashion: 134,
-    glamour: 135,
-    glaziamagazine: 136,
-    coveteur: 137,
+    fashionrogue: 132,
+    businessofffashion: 133,
+    glamour: 134,
+    glaziamagazine: 135,
+    coveteur: 136,
 
-    euromaid: 138,
-    apnews: 139,
-    bbcukraine: 140,
-    nytukraine: 141,
+    euromaid: 137,
+    apnews: 138,
+    bbcukraine: 139,
+    nytukraine: 140,
 
-    apisrael: 142,
-    guardianisrael: 143,
-    jpost: 144,
-    bbcisrael: 145,
+    apisrael: 141,
+    guardianisrael: 142,
+    jpost: 143,
+    bbcisrael: 144,
 
-    insidehigh: 146,
-    theconversationeducation: 147,
-    educationnext: 148,
-    hechingerreport: 149,
+    insidehigh: 145,
+    theconversationeducation: 146,
+    educationnext: 147,
+    hechingerreport: 148,
 
-    brazilnews: 150,
-    brasilwire: 151,
-    estadao: 152,
-    braziljournal: 153,
+    brazilnews: 149,
+    brasilwire: 150,
+    estadao: 151,
+    braziljournal: 152,
 
-    olympics: 154
+    olympics: 153,
+
+    straittimes: 154
   };
 
   try {

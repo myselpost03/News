@@ -20,7 +20,7 @@ const NewsTimer = () => {
   const [selectedCustomOption, setSelectedCustomOption] = useState("World");
   const [scrollIndex, setScrollIndex] = useState(0);
   const [countdown, setCountdown] = useState(0);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -91,6 +91,7 @@ const NewsTimer = () => {
 
         setData(combinedData);
         setLoading(false);
+        setButtonDisabled(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
@@ -297,22 +298,23 @@ const NewsTimer = () => {
         <div className="national-timer-cont">
           <button className="read-in-mins">Read News In</button>
           <div className="selection-container">
-            <div className="options-container">
-              {[1, 3, 10].map((option) => (
-                <button
-                  key={option}
-                  className={`option ${
-                    selectedOption === option ? "selected" : ""
-                  }`}
-                  onClick={() => handleOptionSelect(option)}
-                  disabled={buttonDisabled}
-                >
-                  {selectedOption === option
-                    ? `${formatTime(countdown)}`
-                    : `${option} min`}
-                </button>
-              ))}
-            </div>
+          <div className="options-container">
+  {[1, 3, 10].map((option) => (
+    <button
+      key={option}
+      className={`option ${
+        selectedOption === option ? "selected" : ""
+      } ${buttonDisabled ? "option-disabled" : "option-enabled"}`}
+      onClick={() => handleOptionSelect(option)}
+      disabled={buttonDisabled}
+    >
+      {selectedOption === option
+        ? `${formatTime(countdown)}`
+        : `${option} min`}
+    </button>
+  ))}
+</div>
+
           </div>
         </div>
       </div>

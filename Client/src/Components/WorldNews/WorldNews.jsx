@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
@@ -69,15 +69,12 @@ const WorldNews = () => {
           axios.get(`${BASE_URL}/news/guardianworld`),
           axios.get(`${BASE_URL}/news/independentworld`),
           axios.get(`${BASE_URL}/news/nprworld`),
-          axios.get(`${BASE_URL}/news/newsweek`),
         ]);
       } else {
         setCombinedWorldNews([]);
         setIsLoading(false);
         return;
       }
-
-     
 
       const combinedNews = responseArray.flatMap(({ data }, index) => {
         let countryName;
@@ -87,9 +84,8 @@ const WorldNews = () => {
           countryName = "World";
         }
         return combineNews(data, countryName);
-        
       });
-     
+
       setCombinedWorldNews(combinedNews);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -206,9 +202,9 @@ const WorldNews = () => {
 
   const handleFactCheck = (newsArticle) => {
     ReactGA.event({
-      category: 'User',
-      action: 'Click',
-      label: 'Global News Fact Check Button'
+      category: "User",
+      action: "Click",
+      label: "Global News Fact Check Button",
     });
     checkFactualClaims(newsArticle);
   };
@@ -348,11 +344,6 @@ const WorldNews = () => {
   }, []);
 
   const loadMoreCards = () => {
-    ReactGA.event({
-      category: 'User',
-      action: 'Click',
-      label: 'Load More Button'
-    });
     setVisibleCards((prevVisibleCards) => prevVisibleCards + numOfCardsPerLoad);
   };
 
@@ -361,9 +352,9 @@ const WorldNews = () => {
 
   const toggleSpeak = (description) => {
     ReactGA.event({
-      category: 'User',
-      action: 'Click',
-      label: 'Global News Audio Button'
+      category: "User",
+      action: "Click",
+      label: "Global News Audio Button",
     });
     if (speaking) {
       stopSpeaking();
