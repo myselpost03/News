@@ -603,11 +603,11 @@ app.post("/api/send-notification", async (req, res) => {
   const notificationPromises = subscriptions.map((subscription) => {
     return webpush
       .sendNotification(subscription, payload)
-      .catch((err) => {
+      .catch(async (err) => {
         console.error("Error sending notification:", err);
         if (err.statusCode === 410) {
-          // Subscription is no longer valid, remove it from database
-          return subscription.remove();
+          // Subscription is no longer valid, remove it from the database
+          await Subscription.deleteOne({ endpoint: subscription.endpoint });
         }
       });
   });
