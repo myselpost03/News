@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="canonical" href="https://www.myselpost.com" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="google-site-verification"
+      content="Mm_nwVsv4b6cT_10mXFTlTxBm7njkFgD8Z5dGjWwtdc"
+    />
+    <meta
+      name="description"
+      content="Discover <strong>personalized news updates</strong> with MySelpost. Stay informed with <strong>location-based news</strong>, <strong>snap a picture</strong> for related stories, <strong>schedule news reading times</strong>, and <strong>fact-check</strong> with ease. Get the latest news tailored to your interests and <strong>verified for accuracy</strong>, all in one place."
+    />
+
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <style>
+      #install-popup {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 20px;
+        text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        display: none;
+        z-index: 9999;
+      }
+
+      #install-popup-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      #install-popup-text {
+        flex-grow: 1;
+        font-family: "Poppins", sans-serif;
+      }
+
+      #install-button,
+      #cancel-button {
+        background-color: #03c988;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+      }
+
+      #cancel-button {
+        background-color: #ff6666;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Gabriela&family=Vollkorn&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Bricolage+Grotesque&display=swap"
+    />
+
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <title>MySelpost | Instant, Fact-Checked, Location-Based News</title>
+    <!-- Default Statcounter code for MySelpost https://myselpost.com 
+   
+  
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+      
+        var $googleDiv = $("#google_translate_element .skiptranslate");
+        var $googleDivChild = $("#google_translate_element .skiptranslate div");
+        $googleDivChild.next().remove();
+      
+        $googleDiv.contents().filter(function(){
+          return this.nodeType === 3 && $.trim(this.nodeValue) !== '';
+        }).remove();
+      
+      }
+      </script>
+
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>-->
+    <script type="text/javascript">
+      var sc_project = 13023593;
+      var sc_invisible = 1;
+      var sc_security = "25993c2d";
+    </script>
+    <script
+      type="text/javascript"
+      src="https://www.statcounter.com/counter/counter.js"
+      async
+    ></script>
+    <noscript
+      ><div class="statcounter">
+        <a
+          title="Web Analytics Made Easy -
+  Statcounter"
+          href="https://statcounter.com/"
+          target="_blank"
+          ><img
+            class="statcounter"
+            src="https://c.statcounter.com/13023593/0/25993c2d/1/"
+            alt="Web Analytics Made Easy - Statcounter"
+            referrerpolicy="no-referrer-when-downgrade"
+        /></a></div
+    ></noscript>
+    <!-- End of Statcounter Code -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("./service-worker.js", { scope: "/" })
+            .then(function (registration) {
+              console.log("Service Worker Registered!");
+            })
+            .catch(function (error) {
+              console.log("Service Worker Registration Failed:", error);
+            });
+        });
+      }
+
+      window.addEventListener("beforeinstallprompt", function (event) {
+        event.preventDefault();
+        window.deferredPrompt = event;
+        document.getElementById("install-popup").style.display = "block";
+      });
+
+      window.addEventListener("appinstalled", function (event) {
+        console.log("App installed successfully");
+        document.getElementById("install-popup").style.display = "none";
+      });
+
+      function installApp() {
+        const installPopup = document.getElementById("install-popup");
+        installPopup.style.display = "none";
+        if (window.deferredPrompt) {
+          window.deferredPrompt.prompt();
+          window.deferredPrompt.userChoice.then(function (choiceResult) {
+            if (choiceResult.outcome === "accepted") {
+              console.log("User accepted the install prompt");
+            } else {
+              console.log("User dismissed the install prompt");
+            }
+            window.deferredPrompt = null;
+          });
+        }
+      }
+
+      function cancelInstall() {
+        const installPopup = document.getElementById("install-popup");
+        installPopup.style.display = "none";
+        window.deferredPrompt = null;
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div id="install-popup">
+      <div id="install-popup-content">
+        <button id="install-button" onclick="installApp()">Install</button>
+        <button id="cancel-button" onclick="cancelInstall()">Cancel</button>
+      </div>
+    </div>
+    <script src="./service-worker.js" defer></script>
+  </body>
+</html>
