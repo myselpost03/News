@@ -9,7 +9,7 @@ import {
   TwitterIcon,
 } from "react-share";
 import DonePopup from "../DonePopup/DonePopup";
-import { BASE_URL_TIMER } from "../config";
+import { BASE_URL } from "../config";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import axios from "axios";
 import "./NewsTimer.scss";
@@ -19,7 +19,7 @@ const NewsTimer = () => {
   const [selectedCustomOption, setSelectedCustomOption] = useState("World");
   const [scrollIndex, setScrollIndex] = useState(0);
   const [countdown, setCountdown] = useState(0);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,12 +72,10 @@ const NewsTimer = () => {
         }
 
         const responses = await Promise.all(
-          newsSources.map((source) => {
-            return axios
-              .get(`${BASE_URL_TIMER}/timer/${source}`)
-              .then((response) => {
-                return response;
-              });
+          newsSources.map((source, index) => {
+            return axios.get(`${BASE_URL}/news/${source}`).then((response) => {
+              return response;
+            });
           })
         );
         const combinedData = responses.reduce((acc, response) => {
@@ -86,7 +84,6 @@ const NewsTimer = () => {
 
         setData(combinedData);
         setLoading(false);
-        setButtonDisabled(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
@@ -128,14 +125,13 @@ const NewsTimer = () => {
   }, [scrollIndex]);
 
   useEffect(() => {
-    if (countdown > 0) {
+    if (countdown > 0) { 
       const timer = setInterval(() => {
         setCountdown((prevCountdown) => {
           if (prevCountdown === 0) {
             clearInterval(timer);
             setShowConfetti(true);
             setShowAlert(true);
-            alert("finished");
             setButtonDisabled(false);
             setSelectedOption(null);
             return 0;
@@ -145,7 +141,8 @@ const NewsTimer = () => {
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [countdown]);
+  }, [countdown]); 
+  
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -181,7 +178,7 @@ const NewsTimer = () => {
 
   return (
     <div className="news-timer">
-      {loading && <LoadingSpinner />}
+     {loading && <LoadingSpinner />}
       {showConfetti && (
         <ConfettiExplosion
           force={0.8}
@@ -206,7 +203,7 @@ const NewsTimer = () => {
                     <img
                       src={item.image}
                       className="news-source-img"
-                      alt="image related to article"
+                      alt="news source"
                     />
                   </div>
                   <div className="l-card__userInfo">
@@ -214,9 +211,9 @@ const NewsTimer = () => {
                       <div className="select">
                         <select
                           value={selectedCustomOption}
-                          onChange={(e) => {
-                            setSelectedCustomOption(e.target.value);
-                          }}
+                          onChange={(e) =>
+                            setSelectedCustomOption(e.target.value)
+                          }
                         >
                           <option value="world">World</option>
                           <option value="india">India</option>
@@ -284,7 +281,7 @@ const NewsTimer = () => {
                   key={option}
                   className={`option ${
                     selectedOption === option ? "selected" : ""
-                  } ${buttonDisabled ? "option-disabled" : "option-enabled"}`}
+                  }`}
                   onClick={() => handleOptionSelect(option)}
                   disabled={buttonDisabled}
                 >
