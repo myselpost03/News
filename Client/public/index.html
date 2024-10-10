@@ -103,6 +103,20 @@
       var sc_invisible = 1;
       var sc_security = "25993c2d";
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-HZWMDB6JSZ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-HZWMDB6JSZ");
+    </script>
     <script
       type="text/javascript"
       src="https://www.statcounter.com/counter/counter.js"
@@ -176,10 +190,36 @@
     <div id="root"></div>
     <div id="install-popup">
       <div id="install-popup-content">
-        <button id="install-button" onclick="installApp()">Install</button>
-        <button id="cancel-button" onclick="cancelInstall()">Cancel</button>
+        <button id="install-button" onclick="trackInstallClick(); installApp()">
+          Install
+        </button>
+        <button
+          id="cancel-button"
+          onclick="trackCancelClick(); cancelInstall()"
+        >
+          Cancel
+        </button>
       </div>
     </div>
+    <script>
+      // Track Install button click event
+      function trackInstallClick() {
+        gtag("event", "click", {
+          event_category: "Install Popup",
+          event_label: "Install Button",
+          value: 1,
+        });
+      }
+
+      // Track Cancel button click event
+      function trackCancelClick() {
+        gtag("event", "click", {
+          event_category: "Install Popup",
+          event_label: "Cancel Button",
+          value: 1,
+        });
+      }
+    </script>
     <script src="./service-worker.js" defer></script>
   </body>
 </html>

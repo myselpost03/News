@@ -17,6 +17,8 @@ import { LOCATION_URL } from "../location";
 
 import "./LocalNews.scss";
 
+import ReactGA from "react-ga4";
+
 function LocalNews() {
   const [animating, setAnimating] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -31,6 +33,8 @@ function LocalNews() {
 
   let pullDeltaX = 0;
   let $card, $cardReject, $cardLike;
+
+  ReactGA.initialize("G-HZWMDB6JSZ");
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -93,6 +97,11 @@ function LocalNews() {
   const handleCloseAlert = () => {
     setShowAlert(false);
     setIsLoading(false);
+    ReactGA.event({
+      category: "Alert Box",
+      action: "Click button",
+      label: "Close alert box",
+    });
   };
 
   useEffect(() => {
@@ -168,7 +177,7 @@ function LocalNews() {
             axios.get(`${BASE_URL}/news/canada2?page=${page}`),
             axios.get(`${BASE_URL}/news/canada3?page=${page}`),
           ]);
-        }else if (country === "CU") {
+        } else if (country === "CU") {
           responseArray = await Promise.all([
             axios.get(`${BASE_URL}/news/granma?page=${page}`),
           ]);
@@ -218,6 +227,11 @@ function LocalNews() {
       const newPage = prevPage + 1;
       fetchData(newPage);
       return newPage;
+    });
+    ReactGA.event({
+      category: "Local News",
+      action: "Click button",
+      label: "Load more articles",
     });
   };
 
@@ -339,6 +353,11 @@ function LocalNews() {
 
   const handleFactCheck = (newsArticle) => {
     checkFactualClaims(newsArticle);
+    ReactGA.event({
+      category: "Local News",
+      action: "Click button",
+      label: "Fact checking article",
+    });
   };
 
   const formatDateDifference = useCallback((date) => {
@@ -379,6 +398,12 @@ function LocalNews() {
       speakArticleDescription(description);
       setSpeakingArticle(description);
     }
+
+    ReactGA.event({
+      category: "Local News",
+      action: "Click speaker icon",
+      label: "Article in speech form",
+    });
   };
 
   const speakArticleDescription = (description) => {

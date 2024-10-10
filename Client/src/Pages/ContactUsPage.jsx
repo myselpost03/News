@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import NavBar from "../Components/NavBar/NavBar";
 import toast, { Toaster } from "react-hot-toast";
 import contact from "../Images/contact.png";
 import { BASE_URL } from "../Components/config";
 import axios from "axios";
+import ReactGA from "react-ga4";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLocationDot,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "./ContactUsPage.scss";
 
 const ContactUsPage = () => {
@@ -18,6 +17,19 @@ const ContactUsPage = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState("");
+
+  // Initialize Google Analytics
+  ReactGA.initialize("G-HZWMDB6JSZ");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Track page view on route change
+    ReactGA.send({
+      hitType: "pageview",
+      page: location.pathname + location.search,
+    });
+  }, [location]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -49,6 +61,11 @@ const ContactUsPage = () => {
   };
 
   const handleSubmit = async () => {
+    ReactGA.event({
+      category: "Contact Form",
+      action: "Clicked Button",
+      label: "Submit Button",
+    });
     try {
       setIsSubmitting(true);
       await axios.post(`${BASE_URL}/contact-us`, {

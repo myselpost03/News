@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import NavBar from "../Components/NavBar/NavBar";
 import mockup1 from "../Images/first-feature.jpg";
 import mockup2 from "../Images/second-feature.jpg";
@@ -8,6 +9,8 @@ import mockup4 from "../Images/fourth-feature.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./FeaturesPage.scss";
+
+import ReactGA from "react-ga4";
 
 const features = [
   {
@@ -43,15 +46,45 @@ const features = [
 const FeaturesPage = () => {
   const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
 
+  // Initialize Google Analytics
+  ReactGA.initialize("G-HZWMDB6JSZ");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Track page view on route change
+    ReactGA.send({
+      hitType: "pageview",
+      page: location.pathname + location.search,
+    });
+  }, [location]);
+
+  const handleNextArrow = () => {
+    ReactGA.event({
+      category: "User",
+      action: "Clicked Arrow",
+      label: "Next feature",
+    });
+  };
+
+  const handlePreviousArrow = () => {
+    ReactGA.event({
+      category: "User",
+      action: "Clicked Arrow",
+      label: "Previous feature",
+    });
+  };
+
   const handleNextFeature = () => {
     setCurrentFeatureIndex((prevIndex) => (prevIndex + 1) % features.length);
-   
+    handleNextArrow();
   };
 
   const handlePreviousFeature = () => {
     setCurrentFeatureIndex((prevIndex) =>
       prevIndex === 0 ? features.length - 1 : prevIndex - 1
     );
+    handlePreviousArrow();
   };
 
   const { title, description, image, mockup } = features[currentFeatureIndex];

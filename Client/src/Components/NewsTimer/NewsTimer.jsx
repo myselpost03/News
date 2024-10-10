@@ -12,6 +12,7 @@ import DonePopup from "../DonePopup/DonePopup";
 import { BASE_URL } from "../config";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import axios from "axios";
+import ReactGA from "react-ga4";
 import "./NewsTimer.scss";
 
 const NewsTimer = () => {
@@ -25,6 +26,8 @@ const NewsTimer = () => {
   const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const sliderRef = useRef(null);
+  
+  ReactGA.initialize("G-HZWMDB6JSZ");
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -43,6 +46,11 @@ const NewsTimer = () => {
       default:
         setCountdown(0);
     }
+    ReactGA.event({
+      category: "News Timer",
+      action: "Click button",
+      label: "Select timer",
+    });
   };
 
   useEffect(() => {

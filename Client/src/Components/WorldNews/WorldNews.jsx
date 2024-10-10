@@ -10,6 +10,9 @@ import { LOCATION_URL } from "../location";
 
 import "../LocalNews/LocalNews";
 
+import ReactGA from "react-ga4";
+
+
 const WorldNews = () => {
   const [animating, setAnimating] = useState(false);
   const [factChecking, setFactChecking] = useState(false);
@@ -25,6 +28,8 @@ const WorldNews = () => {
 
   let pullDeltaX = 0;
   let $card, $cardReject, $cardLike;
+
+  ReactGA.initialize("G-HZWMDB6JSZ");
 
   //! Fetch user country
   useEffect(() => {
@@ -177,6 +182,11 @@ const WorldNews = () => {
       fetchData(newPage); 
       return newPage; 
     });
+    ReactGA.event({
+      category: "Global News",
+      action: "Click button",
+      label: "Load more articles",
+    });
   };
 
   useEffect(() => {
@@ -289,9 +299,13 @@ const WorldNews = () => {
     }
   };
 
-  const handleFactCheck = (newsArticle) => {
-    
+  const handleFactCheck = (newsArticle) => { 
     checkFactualClaims(newsArticle);
+    ReactGA.event({
+      category: "Global News",
+      action: "Click button",
+      label: "Fact checking article",
+    });
   };
 
   //! Format date in readable format
@@ -331,6 +345,11 @@ const WorldNews = () => {
       speakArticleDescription(description);
       setSpeakingArticle(description);
     }
+    ReactGA.event({
+      category: "Global News",
+      action: "Click button",
+      label: "Article in speech form",
+    });
   };
 
   const speakArticleDescription = (description) => {

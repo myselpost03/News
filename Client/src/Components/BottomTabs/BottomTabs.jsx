@@ -1,6 +1,8 @@
 //! React imports
-import React from "react";
+import React, {useEffect} from "react";
 import { Link, useLocation } from "react-router-dom";
+
+import ReactGA from "react-ga4";
 
 //! Icon imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +19,13 @@ import "./BottomTabs.scss";
 
 function BottomTabs() {
   const location = useLocation();
+
+  ReactGA.initialize("G-HZWMDB6JSZ");
+
+  // Track page views on location change
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+  }, [location.pathname]);
 
   return (
     <div className="bottom-tabs">
