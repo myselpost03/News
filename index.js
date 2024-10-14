@@ -713,7 +713,7 @@ async function restartServer() {
 }
 
 // Schedule notification to send every day at 10 AM
-cron.schedule('0 * * * *', async () => {
+cron.schedule('23 18 * * *', async () => {
   const title = "MySelpost";
   const body = "You got some news!";
   await sendNotifications(title, body);

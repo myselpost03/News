@@ -1,4 +1,4 @@
-export const BASE_URL = "https://news-lj4i.onrender.com/api";
+export const BASE_URL = "http://localhost:5000/api";
 
 //https://news-lj4i.onrender.com
 //http://localhost:5000
