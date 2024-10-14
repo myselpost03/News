@@ -6,7 +6,7 @@ import NodeCache from "node-cache";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import webpush from "web-push";
-import cron from 'node-cron';
+import cron from "node-cron";
 
 const app = express();
 
@@ -713,7 +713,15 @@ async function restartServer() {
 }
 
 // Schedule notification to send every day at 10 AM
-cron.schedule('23 18 * * *', async () => {
+// Schedule notifications at 7 AM, 9 AM, 12 PM, 6:30 PM, 8 PM, and 10 PM
+cron.schedule("0 7,9,12,20,22 * * *", async () => {
+  const title = "MySelpost";
+  const body = "You got some news!";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 6:30 PM
+cron.schedule("30 18 * * *", async () => {
   const title = "MySelpost";
   const body = "You got some news!";
   await sendNotifications(title, body);
@@ -883,7 +891,6 @@ app.post("/api/send-notification", async (req, res) => {
 
   res.status(200).json({ message: "Notifications sent" });
 });
-
 
 //! Update subscription
 app.put("/api/update-subscription", async (req, res) => {
