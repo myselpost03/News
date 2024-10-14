@@ -227,6 +227,25 @@ const NationalMapsNews = () => {
           },
           { name: "Scotland", coordinates: [56.4907, -4.2026], icon: location },
         ];
+      } else if (userCountry === "PH") {
+        mapCenter = [14.5995, 120.9842];
+        locations = [
+          { name: "Manila", coordinates: [14.5995, 120.9842], icon: location },
+        ];
+      } else if (userCountry === "BR") {
+        mapCenter = [-23.5505, -46.6333];
+        locations = [
+          {
+            name: "Rio de Janeiro",
+            coordinates: [-22.9068, -43.1729],
+            icon: location,
+          },
+          {
+            name: "São Paulo",
+            coordinates: [-23.5505, -46.6333],
+            icon: location,
+          },
+        ];
       } else {
         mapCenter = [20, 0];
         locations = [];

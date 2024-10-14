@@ -274,6 +274,13 @@ const newsSources = [
   "https://www.toronto.com/search/?f=rss&t=article&c=news&l=50&s=start_time&sd=desc",
   "https://www.cbc.ca/webfeed/rss/rss-canada",
   "https://feeds.feedburner.com/ndtvnews-india-news",
+
+  "https://www.wheninmanila.com/feed/",
+  "https://www.inquirer.net/fullfeed/",
+  "https://www.rappler.com/feed/",
+
+  "https://oglobo.globo.com/rss/oglobo",
+  "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/geral/?body=%7B%22layout%22:%22google-news%22%7D",
 ];
 
 /*async function fetchRSS(url, startIndex = 0, limit = 5) {
@@ -514,7 +521,16 @@ const index = {
 
   canada1: 154,
   canada2: 155,
-  canada3: 156
+  canada3: 156,
+
+  phillipines1: 157,
+  phillipines2: 158,
+  phillipines3: 159,
+
+  manila: 157,
+
+  rionews: 160,
+  saopaulo: 161,
 };
 
 function removeBOM(data) {

@@ -57,6 +57,18 @@ const SplashScreen = () => {
   // Function to check if it's desktop
   const isDesktop = !isMobile;
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      navigator.serviceWorker.register('/serviceWorker.js')
+        .then(reg => {
+          console.log('Service Worker Registered', reg);
+        })
+        .catch(error => {
+          console.error('Service Worker Registration Failed', error);
+        });
+    }
+  }, []);
+
   return (
     <div>
       {loading ? (

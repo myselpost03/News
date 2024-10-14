@@ -14,7 +14,7 @@ const TopTabs = () => {
   ReactGA.initialize("G-HZWMDB6JSZ");
   useEffect(() => {
     const countryCode = localStorage.getItem("country");
-    if (!["IN", "UK", "US", "CU"].includes(countryCode)) {
+    if (!["IN", "UK", "US", "CU", "ID", "PH", "BR"].includes(countryCode)) {
       setShowAlert(true);
     } else {
       setShowAlert(false);

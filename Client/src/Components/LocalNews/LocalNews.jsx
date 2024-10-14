@@ -177,6 +177,18 @@ function LocalNews() {
             axios.get(`${BASE_URL}/news/canada2?page=${page}`),
             axios.get(`${BASE_URL}/news/canada3?page=${page}`),
           ]);
+        } else if (country === "PH") {
+          responseArray = await Promise.all([
+            axios.get(`${BASE_URL}/news/phillipines1?page=${page}`),
+            axios.get(`${BASE_URL}/news/phillipines2?page=${page}`),
+            axios.get(`${BASE_URL}/news/phillipines3?page=${page}`),
+          ]);
+        } else if (country === "BR") {
+          responseArray = await Promise.all([
+            axios.get(`${BASE_URL}/news/rionews?page=${page}`),
+            axios.get(`${BASE_URL}/news/brasilwire?page=${page}`),
+            axios.get(`${BASE_URL}/news/braziljournal?page=${page}`),
+          ]);
         } else if (country === "CU") {
           responseArray = await Promise.all([
             axios.get(`${BASE_URL}/news/granma?page=${page}`),
@@ -197,6 +209,10 @@ function LocalNews() {
             countryName = "UK";
           } else if (country === "CU") {
             countryName = "Cuba";
+          } else if (country === "PH") {
+            countryName = "Phillipines";
+          } else if (country === "BR") {
+            countryName = "Brazil";
           } else {
             countryName = "Unknown";
           }
@@ -239,7 +255,7 @@ function LocalNews() {
     const fetchDataOnMount = async () => {
       await fetchData(currentPage);
     };
-    if (!["IN", "UK", "US", "CU", "CA"].includes(country)) {
+    if (!["IN", "UK", "US", "CU", "CA", "PH", "BR"].includes(country)) {
       setShowAlert(true);
     } else {
       setShowAlert(false);

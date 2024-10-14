@@ -26,13 +26,16 @@ const NewsTimer = () => {
   const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const sliderRef = useRef(null);
-  
+
+  const [isCountdownActive, setIsCountdownActive] = useState(false);
+
   ReactGA.initialize("G-HZWMDB6JSZ");
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setScrollIndex(0);
     setButtonDisabled(true);
+    setIsCountdownActive(true);
     switch (option) {
       case 1:
         setCountdown(60);
@@ -53,6 +56,13 @@ const NewsTimer = () => {
     });
   };
 
+  const handleStop = () => {
+    setCountdown(0);
+    setButtonDisabled(false);
+    setIsCountdownActive(false);
+    setShowConfetti(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,12 +79,9 @@ const NewsTimer = () => {
         } else if (option.toUpperCase() === "INDONESIA") {
           newsSources = ["jakarta", "bandung", "surabaya", "bali"];
         } else if (option.toUpperCase() === "BRAZIL") {
-          newsSources = [
-            "brazilnews",
-            "brasilwire",
-            "braziljournal",
-            "estadao",
-          ];
+          newsSources = ["brasilwire", "braziljournal", "rionews"];
+        } else if (option.toUpperCase() === "PH") {
+          newsSources = ["phillipines1", "phillipines2", "phillipines3"];
         } else {
           newsSources = ["thehindu"];
         }
@@ -102,15 +109,17 @@ const NewsTimer = () => {
   }, [selectedCustomOption]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setScrollIndex((prevIndex) =>
-        prevIndex === Math.min((data?.length || 0) - 1, getCardLimit())
-          ? 0
-          : prevIndex + 1
-      );
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [data, selectedOption]);
+    if (isCountdownActive) {
+      const interval = setInterval(() => {
+        setScrollIndex((prevIndex) =>
+          prevIndex === Math.min((data?.length || 0) - 1, getCardLimit())
+            ? 0
+            : prevIndex + 1
+        );
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [data, selectedOption, isCountdownActive]);
 
   const getCardLimit = () => {
     switch (selectedOption) {
@@ -133,7 +142,7 @@ const NewsTimer = () => {
   }, [scrollIndex]);
 
   useEffect(() => {
-    if (countdown > 0) { 
+    if (countdown > 0) {
       const timer = setInterval(() => {
         setCountdown((prevCountdown) => {
           if (prevCountdown === 0) {
@@ -149,8 +158,7 @@ const NewsTimer = () => {
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [countdown]); 
-  
+  }, [countdown]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -186,7 +194,7 @@ const NewsTimer = () => {
 
   return (
     <div className="news-timer">
-     {loading && <LoadingSpinner />}
+      {loading && <LoadingSpinner />}
       {showConfetti && (
         <ConfettiExplosion
           force={0.8}
@@ -230,6 +238,7 @@ const NewsTimer = () => {
                           <option value="cuba">Cuba</option>
                           <option value="indonesia">Indonesia</option>
                           <option value="brazil">Brazil</option>
+                          <option value="ph">Phillipines</option>
                         </select>
                       </div>
                       <div className="share-buttons">
@@ -281,7 +290,14 @@ const NewsTimer = () => {
       </div>
       <div className="timer-buttons">
         <div className="national-timer-cont">
-          <button className="read-in-mins">Read News In</button>
+          {isCountdownActive ? (
+            <button className="read-in-mins" onClick={handleStop}>
+              Stop
+            </button>
+          ) : (
+            <button className="read-in-mins">Read News In</button>
+          )}
+
           <div className="selection-container">
             <div className="options-container">
               {[1, 3, 10].map((option) => (

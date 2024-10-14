@@ -71,6 +71,19 @@ self.addEventListener("push", (event) => {
   );
 });
 
+// public/serviceWorker.js
+self.addEventListener('push', function(event) {
+  const options = {
+    body: 'Got some news for you!',
+    icon: 'logo.png',
+    badge: 'logo.png',
+  };
+  event.waitUntil(
+    self.registration.showNotification('News Update', options)
+  );
+});
+
+
 //! Show push notification with message
 self.addEventListener("message", (event) => {
   if (event.data && event.data.title && event.data.body) {
