@@ -36,34 +36,9 @@ function LocalNews() {
 
   ReactGA.initialize("G-HZWMDB6JSZ");
 
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      const registerServiceWorker = async () => {
-        try {
-          const registration = await navigator.serviceWorker.register(
-            "/service-worker.js"
-          );
 
-          const vapidPublicKey =
-            "BFYpZ9Lk5HdtTY5gx2InF-FXWMFb0sbaQgQa489op10YK9mBu4hgM-JQGh6K6Pwq8NwGn3tHMbNukgx3IWD51PY";
-          const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
 
-          const newSubscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: convertedVapidKey,
-          });
-          setSubscription(newSubscription);
-          await axios.post(`${BASE_URL}/subscribe`, newSubscription);
-        } catch (error) {
-          console.error("Error subscribing to push notifications:", error);
-        }
-      };
-
-      registerServiceWorker();
-    }
-  }, []);
-
-  useEffect(() => {
+  /*useEffect(() => {
     const interval = setInterval(() => {
       if (combinedLocalNews.length > 0) {
         const headlines = combinedLocalNews
@@ -92,7 +67,7 @@ function LocalNews() {
     }
 
     return outputArray;
-  };
+  };*/
 
   const handleCloseAlert = () => {
     setShowAlert(false);
@@ -129,13 +104,13 @@ function LocalNews() {
     }
   }, []);
 
-  const sendNotification = async (title, body) => {
+  /*const sendNotification = async (title, body) => {
     try {
       await axios.post(`${BASE_URL}/send-notification`, { title, body });
     } catch (error) {
       console.error("Error sending notification:", error);
     }
-  };
+  };*/
 
   const [currentPage, setCurrentPage] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState({});
@@ -221,14 +196,14 @@ function LocalNews() {
         });
 
         setCombinedLocalNews(combinedNews);
-        if (combinedNews.length > 0) {
+       /* if (combinedNews.length > 0) {
           const headlines = combinedNews
             .slice(0, 3)
             .map((article) => article.title);
           headlines.forEach((headline, index) => {
             sendNotification(`MySelpost`, headline);
           });
-        }
+        }*/
       } catch (error) {
         console.error("Error fetching news:", error);
       } finally {

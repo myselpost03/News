@@ -27,11 +27,13 @@ import ContactUsPage from "./Pages/ContactUsPage";
 import FeaturesPage from "./Pages/FeaturesPage";
 import NotFoundPage from "./Pages/NotFoundPage";
 import Practice from "./Components/Practice";
+import axios from "axios";
+import { BASE_URL } from "./Components/config";
 
 const SplashScreen = () => {
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
+  const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,16 +60,59 @@ const SplashScreen = () => {
   const isDesktop = !isMobile;
 
   useEffect(() => {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      navigator.serviceWorker.register('/serviceWorker.js')
-        .then(reg => {
-          console.log('Service Worker Registered', reg);
-        })
-        .catch(error => {
-          console.error('Service Worker Registration Failed', error);
-        });
+    if ("serviceWorker" in navigator) {
+      const registerServiceWorker = async () => {
+        try {
+          const registration = await navigator.serviceWorker.register(
+            "/service-worker.js"
+          );
+
+          const vapidPublicKey =
+            "BFYpZ9Lk5HdtTY5gx2InF-FXWMFb0sbaQgQa489op10YK9mBu4hgM-JQGh6K6Pwq8NwGn3tHMbNukgx3IWD51PY";
+          const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+          const newSubscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: convertedVapidKey,
+          });
+          setSubscription(newSubscription);
+          await axios.post(`${BASE_URL}/subscribe`, newSubscription);
+        } catch (error) {
+          console.error("Error subscribing to push notifications:", error);
+        }
+      };
+
+      registerServiceWorker();
     }
   }, []);
+
+  const urlBase64ToUint8Array = (base64String) => {
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
+
+    const rawData = atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+
+    return outputArray;
+  };
+
+  /*const sendNotification = async (title, body) => {
+    try {
+      await axios.post(`${BASE_URL}/send-notification`, { title, body });
+    } catch (error) {
+      console.error("Error sending notification:", error);
+    }
+  };
+
+  useEffect(() => {
+    sendNotification(`MySelpost`, 'You got some news!');
+  }, [])*/
 
   return (
     <div>

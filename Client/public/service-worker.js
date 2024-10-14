@@ -1,10 +1,6 @@
 const CACHE_NAME = "my-cache-v1";
 const clientFolderURL = "/Client";
-const staticAssets = [
-  "/",
-  
-  clientFolderURL,
-];
+const staticAssets = ["/", clientFolderURL];
 
 //! Install PWA
 self.addEventListener("install", (evt) => {
@@ -31,7 +27,27 @@ self.addEventListener("activate", (evt) => {
   );
 });
 
-//! Show push notification with logo and platform name
+//! Push notification logic
+self.addEventListener("push", (event) => {
+  const options = {
+    body: "You got some news",
+    icon: "logo.png",
+    badge: "logo.png",
+  };
+
+  event.waitUntil(
+    self.clients.matchAll().then((clients) => {
+      const isOpen = clients.some((client) => client.visibilityState === "visible");
+
+      // Only show notification if the app is not in the foreground
+      if (!isOpen) {
+        return self.registration.showNotification("MySelpost", options);
+      }
+    })
+  );
+});
+
+/*! Show push notification with logo and platform name
 self.addEventListener("push", (event) => {
   let title = "MySelpost";
   let body = "New notification";
@@ -71,19 +87,6 @@ self.addEventListener("push", (event) => {
   );
 });
 
-// public/serviceWorker.js
-self.addEventListener('push', function(event) {
-  const options = {
-    body: 'Got some news for you!',
-    icon: 'logo.png',
-    badge: 'logo.png',
-  };
-  event.waitUntil(
-    self.registration.showNotification('News Update', options)
-  );
-});
-
-
 //! Show push notification with message
 self.addEventListener("message", (event) => {
   if (event.data && event.data.title && event.data.body) {
@@ -97,35 +100,33 @@ self.addEventListener("message", (event) => {
 
     self.registration.showNotification(event.data.title, notificationOptions);
   }
-});
+});*/
 
 //! Redirect to site on clicking notification
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   event.waitUntil(
-    self.clients
-      .matchAll({ type: "window" })
-      .then((clientList) => {
-        let urlToOpen = "https://myselpost.com";
-        for (let i = 0; i < clientList.length; i++) {
-          const client = clientList[i];
-          if (client.url === urlToOpen && "focus" in client) {
-            return client.focus();
+    self.clients.matchAll({ type: "window" }).then((clientList) => {
+      let urlToOpen = "https://myselpost.com";
+      for (let i = 0; i < clientList.length; i++) {
+        const client = clientList[i];
+        if (client.url === urlToOpen && "focus" in client) {
+          return client.focus();
+        }
+      }
+      if (self.clients.openWindow) {
+        const newWindow = self.clients.openWindow(urlToOpen);
+        newWindow.then((client) => {
+          if (client) {
+            const notificationOptions = {
+              ...event.notification.options,
+              requireInteraction: false,
+            };
+            client.postMessage({ notificationOptions });
           }
-        }
-        if (self.clients.openWindow) {
-          const newWindow = self.clients.openWindow(urlToOpen);
-          newWindow.then((client) => {
-            if (client) {
-              const notificationOptions = {
-                ...event.notification.options,
-                requireInteraction: false,
-              };
-              client.postMessage({ notificationOptions });
-            }
-          });
-        }
-      })
+        });
+      }
+    })
   );
 });
 
@@ -141,20 +142,20 @@ self.addEventListener("pushsubscriptionchange", async (event) => {
 
 //! Update subscription on server
 async function updateSubscriptionOnServer(newSubscription) {
-  return fetch('/api/update-subscription', {
-    method: 'PUT',
+  return fetch("/api/update-subscription", {
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(newSubscription),
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to update subscription on server');
-    }
-    console.log("Subscription updated successfully on server");
-  })
-  .catch(error => {
-    console.error("Error updating subscription on server:", error);
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to update subscription on server");
+      }
+      console.log("Subscription updated successfully on server");
+    })
+    .catch((error) => {
+      console.error("Error updating subscription on server:", error);
+    });
 }

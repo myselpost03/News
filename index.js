@@ -6,6 +6,7 @@ import NodeCache from "node-cache";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import webpush from "web-push";
+import cron from 'node-cron';
 
 const app = express();
 
@@ -710,6 +711,34 @@ async function restartServer() {
     console.error("Error restarting server:", error);
   }
 }
+
+// Schedule notification to send every day at 10 AM
+cron.schedule('0 * * * *', async () => {
+  const title = "MySelpost";
+  const body = "You got some news!";
+  await sendNotifications(title, body);
+});
+
+// Function to send notifications
+const sendNotifications = async (title, body) => {
+  const payload = JSON.stringify({ title, body });
+
+  const subscriptions = await Subscription.find();
+
+  const notificationPromises = subscriptions.map((subscription) => {
+    return webpush
+      .sendNotification(subscription, payload)
+      .catch(async (err) => {
+        if (err.statusCode === 410) {
+          // Subscription is no longer valid, remove it from the database
+          await Subscription.deleteOne({ endpoint: subscription.endpoint });
+        }
+      });
+  });
+
+  await Promise.all(notificationPromises);
+};
+
 //! Fetch news source
 app.get("/api/news/:source", async (req, res) => {
   const source = req.params.source.toLowerCase();
@@ -854,6 +883,7 @@ app.post("/api/send-notification", async (req, res) => {
 
   res.status(200).json({ message: "Notifications sent" });
 });
+
 
 //! Update subscription
 app.put("/api/update-subscription", async (req, res) => {
