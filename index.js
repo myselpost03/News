@@ -712,18 +712,88 @@ async function restartServer() {
   }
 }
 
+// Separate schedule for 7 AM
+cron.schedule("25 12 * * *", async () => {
+  const title = "MySelpost";
+  const body =
+    "🌅 Good Morning! Start your day with the latest headlines and a hot cup of news!";
+  await sendNotifications(title, body);
+});
+
+
+// Separate schedule for 9 AM
+cron.schedule("26 12 * * *", async () => {
+  const title = "MySelpost";
+  const body = "☕ Rise and Shine! Here what making news this morning.";
+  await sendNotifications(title, body);
+});
+
 // Separate schedule for 12 PM
-cron.schedule("19 12 * * *", async () => {
+cron.schedule("0 12 * * *", async () => {
   const title = "MySelpost";
   const body = "🕛 Midday Update: Here what happening right now!";
   await sendNotifications(title, body);
 });
 
+// Separate schedule for 1 PM
+cron.schedule("3 13 * * *", async () => {
+  const title = "MySelpost";
+  const body = "🕛 Midday Update: Here what happening right now!";
+  await sendNotifications(title, body);
+});
 
+// Separate schedule for 3 PM
+cron.schedule("0 15 * * *", async () => {
+  const title = "MySelpost";
+  const body = "☀️ Afternoon update: What trending now!";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 6:30 PM
+cron.schedule("30 18 * * *", async () => {
+  const title = "MySelpost";
+  const body = "🌆 Evening news: Today top stories.";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 7:30 PM
+cron.schedule("30 19 * * *", async () => {
+  const title = "MySelpost";
+  const body = "🌇 Missed the day? Catch up now!";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 8:30 PM
+cron.schedule("30 20 * * *", async () => {
+  const title = "MySelpost";
+  const body = "🌃 Night headlines: Stay updated!";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 9:30 PM
+cron.schedule("30 21 * * *", async () => {
+  const title = "MySelpost";
+  const body = "🌙 Latest news before you unwind.";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 10:30 PM
+cron.schedule("30 22 * * *", async () => {
+  const title = "MySelpost";
+  const body = "✨ News recap: Get your final update!";
+  await sendNotifications(title, body);
+});
+
+// Separate schedule for 11:30 PM
+cron.schedule("30 23 * * *", async () => {
+  const title = "MySelpost";
+  const body = "🛌 Nightcap news: Sleep well informed.";
+  await sendNotifications(title, body);
+});
 
 // Function to send notifications
 const sendNotifications = async (title, body) => {
-  const payload = JSON.stringify({ title, body });
+  const payload = JSON.stringify({ title, body }); 
 
   const subscriptions = await Subscription.find();
 

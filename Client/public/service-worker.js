@@ -29,8 +29,16 @@ self.addEventListener("activate", (evt) => {
 
 //! Push notification logic
 self.addEventListener("push", (event) => {
+  // Get the payload data from the event
+  let data = {};
+  if (event.data) {
+    data = event.data.json(); // Parse the JSON payload
+  } else {
+    data = { title: "MySelpost", body: "You got some news!" }; 
+  }
+
   const options = {
-    body: "You got some news",
+    body: data.body, 
     icon: "logo.png",
     badge: "logo.png",
   };
@@ -41,7 +49,7 @@ self.addEventListener("push", (event) => {
 
       // Only show notification if the app is not in the foreground
       if (!isOpen) {
-        return self.registration.showNotification("MySelpost", options);
+        return self.registration.showNotification(data.title || "MySelpost", options); // Use title from payload
       }
     })
   );
