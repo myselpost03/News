@@ -713,12 +713,13 @@ async function restartServer() {
 }
 
 // Separate schedule for 7 AM
-cron.schedule("0 7 * * *", async () => {
+cron.schedule("3 12 * * *", async () => {
   const title = "MySelpost";
   const body =
     "🌅 Good Morning! Start your day with the latest headlines and a hot cup of news!";
   await sendNotifications(title, body);
 });
+/*
 
 // Separate schedule for 9 AM
 cron.schedule("0 9 * * *", async () => {
@@ -781,7 +782,7 @@ cron.schedule("30 23 * * *", async () => {
   const title = "MySelpost";
   const body = "🛌 Nightcap news: Sleep well informed.";
   await sendNotifications(title, body);
-});
+});*/
 
 // Function to send notifications
 const sendNotifications = async (title, body) => {
