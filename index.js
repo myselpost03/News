@@ -770,12 +770,12 @@ const notifications = [
   {
     time: "0 20 * * *",
     title: "MySelpost",
-    body: "Stay informed with tonight’s top news.",
+    body: "Stay informed with tonights top news.",
   },
   {
-    time: "28 20 * * *",
+    time: "30 20 * * *",
     title: "MySelpost",
-    body: "Stay informed with tonight’s top news.",
+    body: "Stay informed with tonights top news.",
   },
   {
     time: "0 21 * * *",
