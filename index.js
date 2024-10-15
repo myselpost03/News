@@ -773,6 +773,11 @@ const notifications = [
     body: "Stay informed with tonight’s top news.",
   },
   {
+    time: "24 20 * * *",
+    title: "MySelpost",
+    body: "Stay informed with tonight’s top news.",
+  },
+  {
     time: "0 21 * * *",
     title: "MySelpost",
     body: "Breaking news and late developments.",
