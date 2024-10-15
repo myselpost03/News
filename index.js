@@ -713,7 +713,7 @@ async function restartServer() {
 }
 
 // Separate schedule for 7 AM
-cron.schedule("3 12 * * *", async () => {
+cron.schedule("5 12 * * *", async () => {
   const title = "MySelpost";
   const body =
     "🌅 Good Morning! Start your day with the latest headlines and a hot cup of news!";
