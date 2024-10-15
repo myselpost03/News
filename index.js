@@ -763,7 +763,7 @@ const notifications = [
     body: "Top news stories as the day unfolds.",
   },
   {
-    time: "0 19 * * *",
+    time: "1 19 * * *",
     title: "MySelpost",
     body: "A recap of the biggest stories this evening.",
   },
