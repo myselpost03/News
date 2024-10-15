@@ -729,7 +729,7 @@ cron.schedule("0 9 * * *", async () => {
 });
 
 // Separate schedule for 12 PM
-cron.schedule("14 12 * * *", async () => {
+cron.schedule("16 12 * * *", async () => {
   const title = "MySelpost";
   const body = "🕛 Midday Update: Here what happening right now!";
   await sendNotifications(title, body);
