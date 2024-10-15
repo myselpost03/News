@@ -719,7 +719,7 @@ cron.schedule("10 12 * * *", async () => {
     "🌅 Good Morning! Start your day with the latest headlines and a hot cup of news!";
   await sendNotifications(title, body);
 });
-/*
+
 
 // Separate schedule for 9 AM
 cron.schedule("0 9 * * *", async () => {
@@ -729,7 +729,7 @@ cron.schedule("0 9 * * *", async () => {
 });
 
 // Separate schedule for 12 PM
-cron.schedule("0 12 * * *", async () => {
+cron.schedule("14 12 * * *", async () => {
   const title = "MySelpost";
   const body = "🕛 Midday Update: Here what happening right now!";
   await sendNotifications(title, body);
@@ -782,7 +782,7 @@ cron.schedule("30 23 * * *", async () => {
   const title = "MySelpost";
   const body = "🛌 Nightcap news: Sleep well informed.";
   await sendNotifications(title, body);
-});*/
+});
 
 // Function to send notifications
 const sendNotifications = async (title, body) => {
