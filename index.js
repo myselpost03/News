@@ -539,11 +539,11 @@ const index = {
   indiatv: 184,
   news18: 185,
   bbcworld: 186,
-  nyt: 187,
+ /* nyt: 187,
   newsau: 188,
   nytus: 189,
   foxnews: 190,
-  theguardian: 191,
+  theguardian: 191,*/
 };
 
 function removeBOM(data) {
