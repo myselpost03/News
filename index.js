@@ -312,11 +312,11 @@ const newsSources = [
   "https://www.news18.com/commonfeeds/v1/eng/rss/india.xml",
 
   "https://feeds.bbci.co.uk/news/world/rss.xml",
-  /*"https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+  "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
   "https://www.news.com.au/content-feeds/latest-news-world/",
   "https://rss.nytimes.com/services/xml/rss/nyt/US.xml",
   "https://moxie.foxnews.com/google-publisher/us.xml",
-  "https://www.theguardian.com/world/rss"*/
+  "https://www.theguardian.com/world/rss"
 ];
 
 const index = {
@@ -539,11 +539,11 @@ const index = {
   indiatv: 184,
   news18: 185,
   bbcworld: 186,
- /* nyt: 187,
+  nyt: 187,
   newsau: 188,
   nytus: 189,
   foxnews: 190,
-  theguardian: 191,*/
+  theguardian: 191,
 };
 
 function removeBOM(data) {
@@ -599,7 +599,7 @@ async function fetchRSS(url, startIndex = 0, limit = 3) {
     );*/
     return items;
   } catch (error) {
-    console.error(`Error in fetchRSS function:`, error);
+    //console.error(`Error in fetchRSS function:`, error);
     await restartServer();
     /*console.log(
       `Total fetchRSS time: ${(Date.now() - startTime) / 1000} seconds`

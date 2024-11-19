@@ -73,7 +73,7 @@ const NewsTimer = () => {
         if (selectedCustomOption.toUpperCase() === "INDIA") {
           newsSources = ["news18","indiatv"];
         } else if (option.toUpperCase() === "AMERICA") {
-          newsSources = [/*"nytus", "foxnews"*/ "huffpost"];
+          newsSources = ["nytus", "foxnews"];
         } else if (option.toUpperCase() === "UK") {
           newsSources = ["bbc"];
         } else if (option.toUpperCase() === "CUBA") {
@@ -85,7 +85,7 @@ const NewsTimer = () => {
         } else if (option.toUpperCase() === "PH") {
           newsSources = ["phillipines1", "phillipines2", "phillipines3"];
         } else {
-          newsSources = [ "thehindu", /*"theguardian"*/];
+          newsSources = [ "thehindu", "theguardian"];
         }
 
         const responses = await Promise.all(
