@@ -600,7 +600,7 @@ async function fetchRSS(url, startIndex = 0, limit = 3) {
     );*/
     return items;
   } catch (error) {
-    //console.error(`Error in fetchRSS function:`, error);
+    console.error(`Error in fetchRSS function:`, error);
     await restartServer();
     /*console.log(
       `Total fetchRSS time: ${(Date.now() - startTime) / 1000} seconds`
