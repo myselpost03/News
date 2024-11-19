@@ -27,7 +27,7 @@ self.addEventListener("activate", (evt) => {
   );
 });
 
-//! Push notification logic
+/* Push notification logic
 self.addEventListener("push", (event) => {
   // Get the payload data from the event
   let data = {};
@@ -55,7 +55,7 @@ self.addEventListener("push", (event) => {
   );
 });
 
-/*! Show push notification with logo and platform name
+ Show push notification with logo and platform name
 self.addEventListener("push", (event) => {
   let title = "MySelpost";
   let body = "New notification";
@@ -95,7 +95,6 @@ self.addEventListener("push", (event) => {
   );
 });
 
-//! Show push notification with message
 self.addEventListener("message", (event) => {
   if (event.data && event.data.title && event.data.body) {
     const notificationOptions = {
@@ -108,9 +107,9 @@ self.addEventListener("message", (event) => {
 
     self.registration.showNotification(event.data.title, notificationOptions);
   }
-});*/
+});
 
-//! Redirect to site on clicking notification
+
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   event.waitUntil(
@@ -138,7 +137,7 @@ self.addEventListener("notificationclick", (event) => {
   );
 });
 
-//! Managae notification subscription change
+
 self.addEventListener("pushsubscriptionchange", async (event) => {
   try {
     const newSubscription = await self.registration.pushManager.subscribe();
@@ -148,7 +147,7 @@ self.addEventListener("pushsubscriptionchange", async (event) => {
   }
 });
 
-//! Update subscription on server
+
 async function updateSubscriptionOnServer(newSubscription) {
   return fetch("/api/update-subscription", {
     method: "PUT",
@@ -167,3 +166,4 @@ async function updateSubscriptionOnServer(newSubscription) {
       console.error("Error updating subscription on server:", error);
     });
 }
+*/

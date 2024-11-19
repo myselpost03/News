@@ -84,7 +84,7 @@ const DesktopHomePage = () => {
           </div>
         </div>
         <div className="mockup">
-          <img src={mockup} alt="smartphone mockup with news image" className="mockup-img" />
+          <img src={mockup} alt="smartphone mockup with fact check news image" className="mockup-img" />
         </div>
       </div>
 

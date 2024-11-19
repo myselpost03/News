@@ -106,7 +106,7 @@ const FeaturesPage = () => {
             <p className="feature-description">{description}</p>
           </div>
           <div className="feature-mockup">
-            <img src={image} alt="news in card form" className={mockup} />
+            <img src={image} alt="fact-check news in card form" className={mockup} />
           </div>
         </div>
         <FontAwesomeIcon

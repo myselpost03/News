@@ -36,8 +36,6 @@ function LocalNews() {
 
   ReactGA.initialize("G-HZWMDB6JSZ");
 
-
-
   /*useEffect(() => {
     const interval = setInterval(() => {
       if (combinedLocalNews.length > 0) {
@@ -122,12 +120,30 @@ function LocalNews() {
         let responseArray;
         if (country === "IN") {
           responseArray = await Promise.all([
+            axios.get(`${BASE_URL}/news/kalinga?page=${page}`),
+            axios.get(`${BASE_URL}/news/smagazine?page=${page}`),
+            axios.get(`${BASE_URL}/news/sportnews?page=${page}`),
+            axios.get(`${BASE_URL}/news/bnews?page=${page}`),
+            axios.get(`${BASE_URL}/news/ystory?page=${page}`),
+            axios.get(`${BASE_URL}/news/lmpolitics?page=${page}`),
+            axios.get(`${BASE_URL}/news/lmindustry?page=${page}`),
+            axios.get(`${BASE_URL}/news/lmsports?page=${page}`),
+            axios.get(`${BASE_URL}/news/lmelections?page=${page}`),
+            axios.get(`${BASE_URL}/news/lmbudget?page=${page}`),
+            axios.get(`${BASE_URL}/news/lmcompanies?page=${page}`),
+            //axios.get(`${BASE_URL}/news/indianexpress?page=${page}`),
+            axios.get(`${BASE_URL}/news/dna?page=${page}`),
+            axios.get(`${BASE_URL}/news/observerpost?page=${page}`),
             axios.get(`${BASE_URL}/news/indianews?page=${page}`),
             axios.get(`${BASE_URL}/news/ndtvnews?page=${page}`),
             axios.get(`${BASE_URL}/news/zeenews?page=${page}`),
           ]);
         } else if (country === "US") {
           responseArray = await Promise.all([
+            axios.get(`${BASE_URL}/news/varietynews?page=${page}`),
+            axios.get(`${BASE_URL}/news/npr?page=${page}`),
+            axios.get(`${BASE_URL}/news/vox?page=${page}`),
+            axios.get(`${BASE_URL}/news/observer?page=${page}`),
             axios.get(`${BASE_URL}/news/cbsnews?page=${page}`),
             axios.get(`${BASE_URL}/news/huffpost?page=${page}`),
             axios.get(`${BASE_URL}/news/cnnnews?page=${page}`),
@@ -196,7 +212,7 @@ function LocalNews() {
         });
 
         setCombinedLocalNews(combinedNews);
-       /* if (combinedNews.length > 0) {
+        /* if (combinedNews.length > 0) {
           const headlines = combinedNews
             .slice(0, 3)
             .map((article) => article.title);
