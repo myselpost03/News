@@ -69,7 +69,7 @@ const WorldNews = () => {
         let responseArray;
         if (country) {
           responseArray = await Promise.all([
-            axios.get(`${BASE_URL}/news/newsau?page=${page}`),
+            //axios.get(`${BASE_URL}/news/newsau?page=${page}`),
             axios.get(`${BASE_URL}/news/euronews?page=${page}`),
             axios.get(`${BASE_URL}/news/globalvoices?page=${page}`),
             axios.get(`${BASE_URL}/news/global4?page=${page}`),

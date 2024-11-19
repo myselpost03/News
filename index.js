@@ -312,12 +312,11 @@ const newsSources = [
   "https://www.news18.com/commonfeeds/v1/eng/rss/india.xml",
 
   "https://feeds.bbci.co.uk/news/world/rss.xml",
-  "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+  /*"https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
   "https://www.news.com.au/content-feeds/latest-news-world/",
   "https://rss.nytimes.com/services/xml/rss/nyt/US.xml",
   "https://moxie.foxnews.com/google-publisher/us.xml",
-  //"https://www.rt.com/rss/news/"
-  "https://www.theguardian.com/world/rss"
+  "https://www.theguardian.com/world/rss"*/
 ];
 
 const index = {
