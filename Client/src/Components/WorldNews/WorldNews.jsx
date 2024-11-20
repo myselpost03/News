@@ -12,6 +12,7 @@ import "../LocalNews/LocalNews";
 
 import ReactGA from "react-ga4";
 
+
 const WorldNews = () => {
   const [animating, setAnimating] = useState(false);
   const [factChecking, setFactChecking] = useState(false);
@@ -69,13 +70,10 @@ const WorldNews = () => {
         let responseArray;
         if (country) {
           responseArray = await Promise.all([
-            axios.get(`${BASE_URL}/news/newsau?page=${page}`),
+            axios.get(`${BASE_URL}/news/thehindu?page=${page}`),
             axios.get(`${BASE_URL}/news/euronews?page=${page}`),
-            axios.get(`${BASE_URL}/news/globalvoices?page=${page}`),
+            axios.get(`${BASE_URL}/news/scpost?page=${page}`),
             axios.get(`${BASE_URL}/news/global4?page=${page}`),
-            axios.get(`${BASE_URL}/news/storifynews?page=${page}`),
-            axios.get(`${BASE_URL}/news/newsweek?page=${page}`),
-            axios.get(`${BASE_URL}/news/bbcworld?page=${page}`),
           ]);
         } else {
           setCombinedWorldNews([]);
@@ -96,6 +94,7 @@ const WorldNews = () => {
     },
     [country]
   );
+
 
   /*const fetchData = useCallback(
     async (page) => {
@@ -175,12 +174,13 @@ const WorldNews = () => {
     },
     [country]
   );*/
+  
 
   const handleLoadMore = () => {
     setCurrentPage((prevPage) => {
       const newPage = prevPage + 1;
-      fetchData(newPage);
-      return newPage;
+      fetchData(newPage); 
+      return newPage; 
     });
     ReactGA.event({
       category: "Global News",
@@ -299,7 +299,7 @@ const WorldNews = () => {
     }
   };
 
-  const handleFactCheck = (newsArticle) => {
+  const handleFactCheck = (newsArticle) => { 
     checkFactualClaims(newsArticle);
     ReactGA.event({
       category: "Global News",
@@ -367,14 +367,15 @@ const WorldNews = () => {
     setSpeaking(false);
     setSpeakingArticle(null);
   };
-
+ 
   /*const handleRefresh = () => {
     // Clear the specific page's cache from local storage
     localStorage.removeItem(`worldNewsPage_${currentPage}`);
     // Fetch new articles for the current page
     fetchRefreshedData(currentPage);
   };*/
-
+  
+  
   return (
     <>
       <div className="news__card-cont">
@@ -382,6 +383,7 @@ const WorldNews = () => {
           <LoadingSpinner />
         ) : (
           <>
+
             {renderNewsArticles(
               combinedWorldNews,
               visibleCards,
@@ -394,8 +396,8 @@ const WorldNews = () => {
               toggleSpeak,
               speakingArticle,
               speaking,
-              factChecking
-              // handleRefresh
+              factChecking,
+             // handleRefresh
             )}
             {combinedWorldNews.length >= visibleCards && (
               <button

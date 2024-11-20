@@ -282,42 +282,63 @@ const newsSources = [
 
   "https://oglobo.globo.com/rss/oglobo",
   "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/geral/?body=%7B%22layout%22:%22google-news%22%7D",
-
-  "https://theobserverpost.com/feed/",
-  "https://www.dnaindia.com/feeds/india.xml",
-  "https://indianexpress.com/feed/",
-  "https://www.storifynews.com/feed/",
-  "https://www.livemint.com/rss/politics",
-  "https://www.livemint.com/rss/industry",
-  "https://www.livemint.com/rss/sports",
-  "https://www.livemint.com/rss/elections",
-  "https://www.livemint.com/rss/budget",
-  "https://www.livemint.com/rss/companies",
-  "https://yourstory.com/feed",
-  "https://www.bollywoodhungama.com/rss/news.xml",
-  "https://sportstar.thehindu.com/cricket/feeder/default.rss",
-  "https://www.mid-day.com/Resources/midday/rss/india-news.xml",
-  "https://kalingatv.com/feed/",
-
-  "https://variety.com/feed/",
-  "https://feeds.npr.org/1002/rss.xml",
-  "https://www.vox.com/rss/index.xml",
-  "https://observer.com/feed/",
-  "https://www.hollywoodreporter.com/feed/",
-
-  "https://www.newsweek.com/rss",
-  "https://globalvoices.org/feed/",
-
-  "https://www.indiatvnews.com/rssnews/topstory.xml",
-  "https://www.news18.com/commonfeeds/v1/eng/rss/india.xml",
-
-  "https://feeds.bbci.co.uk/news/world/rss.xml",
-  "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
-  "https://www.news.com.au/content-feeds/latest-news-world/",
-  "https://rss.nytimes.com/services/xml/rss/nyt/US.xml",
-  "https://moxie.foxnews.com/google-publisher/us.xml",
-  "https://www.theguardian.com/world/rss"
 ];
+
+/*async function fetchRSS(url, startIndex = 0, limit = 5) {
+  const startTime = Date.now();
+
+  try {
+    const feedResponse = await axios.get(url);
+
+    if (feedResponse.status !== 200) {
+      throw new Error(
+        `Failed to fetch RSS feed, status code: ${feedResponse.status}`
+      );
+    }
+
+    const feedContent = removeBOM(feedResponse.data);
+    const feed = await parser.parseString(feedContent);
+    
+    const items = feed.items
+      .slice(startIndex, startIndex + limit)
+      .map((item) => ({
+        title: item.title,
+        link: item.link,
+        description: item.contentSnippet,
+        date: item.isoDate,
+        image: null,
+      }));
+
+    const imageStartTime = Date.now();
+    const imageRequests = items.map(async (item) => {
+      try {
+        const htmlResponse = await axios.get(item.link, { timeout: 5000 });
+        const metaImage = extractImage(htmlResponse.data);
+        item.image = metaImage || null;
+      } catch (error) {
+        //console.error(`Error fetching image for ${item.link}:`, error);
+      }
+    });
+
+    await Promise.all(imageRequests);
+    console.log(
+      `Image processing time: ${(Date.now() - imageStartTime) / 1000} seconds`
+    );
+
+    cache.set(`${url}-${startIndex}`, items);
+    console.log(
+      `Total fetchRSS time: ${(Date.now() - startTime) / 1000} seconds`
+    );
+    return items;
+  } catch (error) {
+    //console.error(`Error in fetchRSS function:`, error);
+    await restartServer();
+    console.log(
+      `Total fetchRSS time: ${(Date.now() - startTime) / 1000} seconds`
+    );
+    return [];
+  }
+}*/
 
 const index = {
   indianews: 0,
@@ -511,39 +532,6 @@ const index = {
 
   rionews: 160,
   saopaulo: 161,
-
-  observerpost: 162,
-  dna: 163,
-  indianexpress: 164,
-  storifynews: 165,
-  lmpolitics: 166,
-  lmindustry: 167,
-  lmsports: 168,
-  lmelections: 169,
-  lmbudget: 170,
-  lmcompanies: 171,
-  ystory: 172,
-  bnews: 173,
-  sportnews: 174,
-  smagazine: 175,
-  kalinga: 176,
-
-  varietynews: 177,
-  npr: 178,
-  voxnews: 179,
-  observer: 180,
-  hreporter: 181,
-
-  newsweek: 182,
-  globalvoices: 183,
-  indiatv: 184,
-  news18: 185,
-  bbcworld: 186,
-  nyt: 187,
-  newsau: 188,
-  nytus: 189,
-  foxnews: 190,
-  theguardian: 191,
 };
 
 function removeBOM(data) {
@@ -623,21 +611,23 @@ async function fetchRSSTimer(url) {
       date: item.isoDate,
       image: null,
     }));
-   //const imageStartTime = Date.now();
-   const imageRequests = items.map(async (item) => {
-    try {
-      const htmlResponse = await axios.get(item.link, { timeout: 5000 });
-      const metaImage = extractImage(htmlResponse.data);
-      item.image = metaImage || null;
-    } catch (error) {
-      //console.error(`Error fetching image for ${item.link}:`, error);
-    }
-  });
+    const imageRequests = items.map(async (item) => {
+      try {
+        const htmlResponse = await axios.get(item.link, {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+          },
+          timeout: 5000,
+        });
+        const metaImage = extractImage(htmlResponse.data);
+        item.image = metaImage || null;
+      } catch (error) {
+        //console.error("Error fetching or parsing article:", error);
+      }
+    });
 
-  await Promise.all(imageRequests);
-  /* console.log(
-    `Image processing time: ${(Date.now() - imageStartTime) / 1000} seconds`
-  );*/
+    await Promise.all(imageRequests);
 
     cache.set(url, items);
 

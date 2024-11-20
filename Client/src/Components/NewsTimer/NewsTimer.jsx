@@ -49,13 +49,12 @@ const NewsTimer = () => {
       default:
         setCountdown(0);
     }
+    ReactGA.event({
+      category: "News Timer",
+      action: "Click button",
+      label: "Select timer",
+    });
   };
-
-  useEffect(() => {
-    if (countdown === 0) {
-      handleStop();
-    }
-  }, [countdown])
 
   const handleStop = () => {
     setCountdown(0);
@@ -64,16 +63,15 @@ const NewsTimer = () => {
     setShowConfetti(false);
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const option = selectedCustomOption || "world";
         let newsSources = [];
         if (selectedCustomOption.toUpperCase() === "INDIA") {
-          newsSources = ["news18","indiatv"];
+          newsSources = ["indianews", "ndtvnews", "zeenews"];
         } else if (option.toUpperCase() === "AMERICA") {
-          newsSources = ["nytus", "foxnews"];
+          newsSources = ["huffpost", "cbsnews", "cnnnews"];
         } else if (option.toUpperCase() === "UK") {
           newsSources = ["bbc"];
         } else if (option.toUpperCase() === "CUBA") {
@@ -85,12 +83,12 @@ const NewsTimer = () => {
         } else if (option.toUpperCase() === "PH") {
           newsSources = ["phillipines1", "phillipines2", "phillipines3"];
         } else {
-          newsSources = [ "thehindu", "theguardian"];
+          newsSources = ["thehindu"];
         }
 
         const responses = await Promise.all(
           newsSources.map((source, index) => {
-            return axios.get(`${BASE_URL}/timer/${source}`).then((response) => {
+            return axios.get(`${BASE_URL}/news/${source}`).then((response) => {
               return response;
             });
           })
@@ -100,11 +98,6 @@ const NewsTimer = () => {
         }, []);
 
         setData(combinedData);
-        // Log total articles for India
-      if (selectedCustomOption.toUpperCase() === "INDIA") {
-        console.log(`Total number of articles for India: ${combinedData.length}`);
-      }
-
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -115,8 +108,6 @@ const NewsTimer = () => {
     fetchData();
   }, [selectedCustomOption]);
 
-
-  
   useEffect(() => {
     if (isCountdownActive) {
       const interval = setInterval(() => {
@@ -133,11 +124,11 @@ const NewsTimer = () => {
   const getCardLimit = () => {
     switch (selectedOption) {
       case 1:
-        return 18;
+        return 11;
       case 3:
         return 35;
       case 10:
-        return 54;
+        return 98;
       default:
         return 0;
     }
@@ -228,7 +219,7 @@ const NewsTimer = () => {
                     <img
                       src={item.image}
                       className="news-source-img"
-                      alt="fact check news source"
+                      alt="news source"
                     />
                   </div>
                   <div className="l-card__userInfo">
