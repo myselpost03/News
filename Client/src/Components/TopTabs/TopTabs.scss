@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Paytone+One:regular);
+
 $white: #fff;
 $black: #000000;
 
@@ -58,4 +60,105 @@ $black: #000000;
   position: fixed;
   z-index: 2;
   width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .top-tabs-header {
+    margin: -33% 0 0 -11%;
+    width: 30%;
+    transform: scale(0.9);
+  }
+
+  h1.top-tab-title {
+    color: #111;
+    font-family: "Darumadrop One", serif;
+  }
+
+  .top-tab {
+    color: #111;
+    font-weight: bold;
+    &:hover {
+      border-bottom-color: #111;
+    }
+
+    &.active {
+      border-bottom-color: #111;
+    }
+  }
+
+  .top-header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background: linear-gradient(135deg, #949596, #d5e2e9);
+  }
+
+  .top-tabs {
+    background: linear-gradient(135deg, #949596, #d5e2e9);
+  }
+
+  .top-tab-title {
+    font-family: "poppins", serif;
+  }
+
+  .top-tab-icon {
+    width: 15%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .top-tabs-header {
+    width: 24%;
+    transform: scale(1.01);
+    margin-top: -29%;
+    margin-left: -11%;
+  }
+
+  h1.top-tab-title {
+    color: #111;
+    font-family: "Darumadrop One", serif;
+  }
+}
+
+@media screen and (min-width: 1280px) and (min-height: 950px) {
+  .top-tabs-header {
+    transform: scale(0.93);
+    margin-top: -33%;
+    margin-left: -10%;
+  }
+}
+
+@media screen and (min-width: 1366px) and (min-height: 768px) {
+  .top-tabs-header {
+    width: 24%;
+    transform: scale(1.05);
+    margin-top: -27%;
+    margin-left: -12%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .top-tabs-header {
+    width: 23%;
+    transform: scale(1.07);
+    margin-top: -26%;
+    margin-left: -12%;
+  }
+
+  h1.top-tab-title {
+    color: #111;
+    font-family: "Darumadrop One", serif;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .top-tabs-header {
+    width: 24%;
+    margin-top: -26%;
+    transform: scale(1.09);
+  }
+
+  h1.top-tab-title {
+    color: #111;
+    font-family: "Darumadrop One", serif;
+  }
 }

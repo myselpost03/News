@@ -1,0 +1,182 @@
+.right-sidebar {
+  position: relative;
+  width: 170%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: -170% 0 0 5%;
+}
+
+.d-bubble-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 90px;
+  height: 90px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-top: 4%;
+  margin-left: -85%;
+}
+
+.d-bubble {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.1);
+  }
+}
+
+.d-bubble::before,
+.d-bubble::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.d-bubble::before {
+  width: 60%;
+  height: 60%;
+  top: 10%;
+  left: 15%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  z-index: 1;
+}
+
+.d-bubble::after {
+  width: 80%;
+  height: 80%;
+  bottom: 10%;
+  right: 10%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  z-index: 0;
+}
+
+button.d-bubble-btn {
+  border: none;
+  outline: none;
+  color: #111;
+  background: linear-gradient(135deg, #949596, #d5e2e9);
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  white-space: nowrap;
+  border-radius: 0.3rem;
+  font-weight: bold;
+  font-family: "poppins", serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.d-bubble-btn:hover {
+  cursor: pointer;
+  color: #4e4e4e;
+  background: linear-gradient(135deg, #949596, #d5e2e9);
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.d-maps-page {
+  margin: 0 0 -257% -35%;
+}
+@media screen and (min-width: 1280px) {
+  .right-sidebar {
+    margin: -165% 0 0 18%;
+  }
+
+  .d-bubble-container {
+    margin-top: -55%;
+  }
+
+  button.d-bubble-btn {
+    margin: -55% 0 0 0;
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (min-width: 1280px) and (min-height: 950px) {
+  .right-sidebar {
+    margin: -165% 0 0 18%;
+  }
+
+  .d-bubble-container {
+    margin-top: -88%;
+  }
+
+  button.d-bubble-btn {
+    margin: -88% 0 0 0;
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (min-width: 1366px) and (min-height: 768px) {
+  .d-bubble-container {
+    margin-top: -47%;
+  }
+
+  button.d-bubble-btn {
+    margin: -50% 0 0 0%;
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .right-sidebar {
+    margin: -175% 0 0 18%;
+  }
+
+  .d-bubble-container {
+    margin-top: -75%;
+  }
+
+  button.d-bubble-btn {
+    margin: -75% 0 0 0;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .right-sidebar {
+    width: 220%;
+    margin: -175% 0 0 -51%;
+  }
+
+  .d-bubble-container {
+    margin-top: -85%;
+  }
+
+  button.d-bubble-btn {
+    margin: -85% 5% 0 5%;
+    transform: scale(1.4);
+  }
+}

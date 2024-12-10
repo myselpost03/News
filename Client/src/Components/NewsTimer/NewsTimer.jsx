@@ -203,6 +203,23 @@ const NewsTimer = () => {
           width={1600}
         />
       )}
+      <div className="d-news-timer-tabs">
+        <button
+        className ="d-home-tab"
+        >
+          Home
+        </button>
+        <button
+           className ="d-world-tab"
+        >
+          World
+        </button>
+        <button
+          className ="d-news-timer-tab"
+        >
+          News Timer
+        </button>
+      </div>
       <div className="card-slider" ref={sliderRef}>
         {data &&
           data.slice(0, getCardLimit() + 1).map((item, index) => (

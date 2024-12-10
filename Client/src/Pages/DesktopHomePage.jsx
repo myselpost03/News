@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import QRCode from "qrcode.react";
 import Navbar from "../Components/NavBar/NavBar";
-import mockup from "../Images/mockup-1.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import LeftSidebar from "../Components/LeftSidebar/LeftSidebar";
+import CenterArea from "../Components/CenterArea/CenterArea";
+import RightSidebar from "../Components/RightSidebar/RightSidebar";
 import "./DesktopHomePage.scss";
 
 const DesktopHomePage = () => {
@@ -50,7 +50,6 @@ const DesktopHomePage = () => {
   };
 
   const handleQRCodeClick = () => {
-    
     // Display install prompt if available
     if (window.deferredPrompt) {
       window.deferredPrompt.prompt();
@@ -62,33 +61,22 @@ const DesktopHomePage = () => {
 
   return (
     <div className="desktop-home-page">
-      <Navbar />
-      <div className="page">
-        <div className="main-section">
-          <h2 className="welcome-text">DOWNLOAD THIS APP</h2>
-          <p className="third-text">
-            Fact-checked updates, location-based news, and more—now at your
-            fingertips. MySelpost is your go-to destination for staying
-            informed, even on the busiest days. Join a community of informed
-            individuals who value accuracy and innovation in every news story.
-            Experience the future of news with <strong>MySelpost</strong> today.
-          </p>
-          <div className="qr-code-section">
-            <h3 className="qr-code-text">
-              <FontAwesomeIcon icon={faDownload} style={{marginRight: '5%'}} />
-              Scan to Install App
-            </h3>
-            <div className="qr-code" onClick={handleQRCodeClick}>
-              <QRCode value={pwaUrl} size={100} />
-            </div>
-          </div>
+      <div className="navbar">
+        <Navbar />
+      </div>
+      <div className="main-content">
+        <div className="left-sidebar-content">
+          <LeftSidebar />
         </div>
-        <div className="mockup">
-          <img src={mockup} alt="smartphone mockup with fact check news image" className="mockup-img" />
+        <div className="center-area-content">
+          <CenterArea />
+        </div>
+        <div className="right-sidebar-content">
+          <RightSidebar />
         </div>
       </div>
 
-      {/* Install Popup */}
+      {/* Install Popup 
       <div id="install-popup" style={{ display: "none" }}>
         <div id="install-popup-content">
           <button id="install-button" onClick={installApp}>
@@ -98,7 +86,7 @@ const DesktopHomePage = () => {
             Cancel
           </button>
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 };

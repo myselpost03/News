@@ -7,7 +7,7 @@ import "./MapsPage.scss";
 
 const MapsPage = () => {
   return (
-    <div>
+    <div className="maps-page">
       <TopTabs />
       <NationalMapsNews />
       <BottomTabs />

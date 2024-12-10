@@ -52,6 +52,31 @@ body {
   width: 100%;
 }
 
+@media screen and (min-width: 1024px) {
+  .news {
+    &__card-cont {
+      margin: 1% 0 0 -12%;
+    }
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .news {
+    &__card-cont {
+      margin: 16.2rem 0 0 -3.5rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .news {
+    &__card-cont {
+      margin-top: 41%;
+      margin-left: -15%;
+    }
+  }
+}
+
 .news {
   &__card-cont {
     background: $card-container-background;
@@ -252,6 +277,7 @@ p.news__card__we__big {
   font-size: 0.7rem;
   white-space: nowrap;
   background-color: $blue;
+  font-family: "poppins", serif;
 }
 
 button.fact-btn {
@@ -262,10 +288,11 @@ button.fact-btn {
   padding: 0.2rem;
   border-radius: 0.3rem;
   font-weight: 700;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   margin: 0 0 0 3%;
   white-space: nowrap;
   font-family: "poppins", serif;
+  cursor: pointer;
 }
 
 button.fact-btn-green {
@@ -273,6 +300,7 @@ button.fact-btn-green {
   border: none;
   outline: none;
   color: $white;
+  font-size: 0.7rem;
   padding: 0.2rem;
   border-radius: 0.3rem;
   font-weight: 700;
@@ -287,6 +315,7 @@ button.fact-btn-red {
   color: $white;
   padding: 0.2rem;
   border-radius: 0.3rem;
+  font-size: 0.7rem;
   font-weight: 700;
   margin: 0 0 0 3%;
   font-family: "poppins", serif;
@@ -318,6 +347,7 @@ p.news_card_date {
   border-radius: 1rem;
   background-color: $black;
   color: $white;
+  cursor: pointer;
 }
 
 .completed-articles-btn {
@@ -336,6 +366,7 @@ p.news_card_date {
   color: $white;
 }
 
-.speaker{
+.speaker {
   margin: 2% 0 0 5%;
+  cursor: pointer;
 }

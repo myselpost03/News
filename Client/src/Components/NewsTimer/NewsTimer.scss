@@ -247,3 +247,24 @@ button.read-in-mins {
   font-family: "poppins", serif;
   font-size: 0.8rem;
 }
+
+
+@media screen and (min-width: 1024px) {
+  .news-timer {
+    margin: 0 0 0 10%;
+  }
+  .l-card {
+    min-width: 300px;
+    max-width: 300px;
+    height: auto;
+    background: #f5f5f5;
+    color: #272727;
+    padding: 50px;
+    box-shadow: 0px 7px 24px rgba(100, 100, 100, 0.4);
+  }
+
+  button.read-in-mins{
+    width: 17%;
+    font-size: 0.6rem;
+  }
+}

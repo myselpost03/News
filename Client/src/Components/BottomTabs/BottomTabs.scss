@@ -38,3 +38,31 @@ $white: #fff;
     }
   }
 }
+
+
+@media screen and (min-width: 1024px) {
+  .bottom-tabs {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .bottom-tabs {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .bottom-tabs {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1900px) {
+  .bottom-tabs {
+    display: none;
+  }
+}
+
+
+

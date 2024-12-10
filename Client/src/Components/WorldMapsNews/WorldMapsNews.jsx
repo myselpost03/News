@@ -11,6 +11,7 @@ const WorldMapsNews = () => {
   const mapContainer = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
   const [cities, setCities] = useState([]);
+  const [issignedup, setIssignedup] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -79,35 +80,68 @@ const WorldMapsNews = () => {
         { name: "Mexico", coordinates: [19.4326, -99.1332], icon: location },
       ];
 
-      const cityMarkers = locations.map((location) => {
-        const icon = L.icon({
-          iconUrl: location.icon,
-          iconSize: [32, 32],
+      if(issignedup && window.innerWidth > 768){
+        const cityMarkers = locations.map((location) => {
+          const icon = L.icon({
+            iconUrl: location.icon,
+            iconSize: [32, 32],
+          });
+  
+          const marker = L.marker(location.coordinates, { icon }).addTo(map);
+          marker.bindPopup(
+            `<div class="loading-news"><b>Loading News...</b><br/></div>`,
+            { className: "custom-popup-world" }
+          );
+  
+          marker.on("click", async () => {
+            try {
+              const response = await axios.get(
+                `${BASE_URL}/maps-news/${location.name.toLowerCase()}`
+              );
+              const newsArticles = response.data;
+              const headlines = newsArticles.map((article) => article.title);
+              const popup = marker.getPopup();
+              showHeadlines(popup, location.name, headlines.slice(0, 20));
+            } catch (error) {
+              console.error("Error fetching news:", error);
+            }
+          });
+          return { name: location.name, marker, headlines: [] };
         });
-
-        const marker = L.marker(location.coordinates, { icon }).addTo(map);
-        marker.bindPopup(
-          `<div class="loading-news"><b>Loading News...</b><br/></div>`,
-          { className: "custom-popup-world" }
-        );
-
-        marker.on("click", async () => {
-          try {
-            const response = await axios.get(
-              `${BASE_URL}/maps-news/${location.name.toLowerCase()}`
-            );
-            const newsArticles = response.data;
-            const headlines = newsArticles.map((article) => article.title);
-            const popup = marker.getPopup();
-            showHeadlines(popup, location.name, headlines.slice(0, 20));
-          } catch (error) {
-            console.error("Error fetching news:", error);
-          }
+  
+        setCities(cityMarkers);
+      } else if(window.innerWidth < 768){
+        const cityMarkers = locations.map((location) => {
+          const icon = L.icon({
+            iconUrl: location.icon,
+            iconSize: [32, 32],
+          });
+  
+          const marker = L.marker(location.coordinates, { icon }).addTo(map);
+          marker.bindPopup(
+            `<div class="loading-news"><b>Loading News...</b><br/></div>`,
+            { className: "custom-popup-world" }
+          );
+  
+          marker.on("click", async () => {
+            try {
+              const response = await axios.get(
+                `${BASE_URL}/maps-news/${location.name.toLowerCase()}`
+              );
+              const newsArticles = response.data;
+              const headlines = newsArticles.map((article) => article.title);
+              const popup = marker.getPopup();
+              showHeadlines(popup, location.name, headlines.slice(0, 20));
+            } catch (error) {
+              console.error("Error fetching news:", error);
+            }
+          });
+          return { name: location.name, marker, headlines: [] };
         });
-        return { name: location.name, marker, headlines: [] };
-      });
-
-      setCities(cityMarkers);
+  
+        setCities(cityMarkers);
+      }
+    
 
       return () => {
         map.remove();
@@ -146,8 +180,9 @@ const WorldMapsNews = () => {
   };
 
   return (
-    <div style={{ position: "relative", zIndex: "1" }}>
-      <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} />
+    <div className="maps-cont">
+      <div ref={mapContainer} className="map-screen" />
+      <button className="d-use-button">USE</button>
     </div>
   );
 };
