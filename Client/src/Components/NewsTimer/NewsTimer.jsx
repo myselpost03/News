@@ -17,7 +17,7 @@ import "./NewsTimer.scss";
 
 const NewsTimer = () => {
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedCustomOption, setSelectedCustomOption] = useState("World");
+ const [selectedCustomOption, setSelectedCustomOption] = useState("World"); 
   const [scrollIndex, setScrollIndex] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -28,6 +28,17 @@ const NewsTimer = () => {
   const sliderRef = useRef(null);
 
   const [isCountdownActive, setIsCountdownActive] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   ReactGA.initialize("G-HZWMDB6JSZ");
 
@@ -203,23 +214,11 @@ const NewsTimer = () => {
           width={1600}
         />
       )}
-      <div className="d-news-timer-tabs">
-        <button
-        className ="d-home-tab"
-        >
-          Home
-        </button>
-        <button
-           className ="d-world-tab"
-        >
-          World
-        </button>
-        <button
-          className ="d-news-timer-tab"
-        >
-          News Timer
-        </button>
-      </div>
+     {/* <div className={isMobile ? "no-tab" : "d-timer-tabs"}>
+        <button className="d-timer-home-tab">Home</button>
+        <button className="d-timer-world-tab">World</button>
+        <button className="d-timer-news-timer-tab">News Timer</button>
+      </div>*/}
       <div className="card-slider" ref={sliderRef}>
         {data &&
           data.slice(0, getCardLimit() + 1).map((item, index) => (
@@ -305,36 +304,42 @@ const NewsTimer = () => {
             </div>
           ))}
       </div>
-      <div className="timer-buttons">
-        <div className="national-timer-cont">
-          {isCountdownActive ? (
-            <button className="read-in-mins" onClick={handleStop}>
-              Stop
-            </button>
-          ) : (
-            <button className="read-in-mins">Read News In</button>
-          )}
+      {isMobile ? (
+        <div className="timer-buttons">
+          <div className="national-timer-cont">
+            {isCountdownActive ? (
+              <button className="stop-reading" onClick={handleStop}>
+                Stop
+              </button>
+            ) : (
+              <button className="read-in-mins">Read News In</button>
+            )}
 
-          <div className="selection-container">
-            <div className="options-container">
-              {[1, 3, 10].map((option) => (
-                <button
-                  key={option}
-                  className={`option ${
-                    selectedOption === option ? "selected" : ""
-                  }`}
-                  onClick={() => handleOptionSelect(option)}
-                  disabled={buttonDisabled}
-                >
-                  {selectedOption === option
-                    ? `${formatTime(countdown)}`
-                    : `${option} min`}
-                </button>
-              ))}
+            <div className="selection-container">
+              <div className="options-container">
+                {[1, 3, 10].map((option) => (
+                  <button
+                    key={option}
+                    className={`option ${
+                      selectedOption === option ? "selected" : ""
+                    }`}
+                    onClick={() => handleOptionSelect(option)}
+                    disabled={buttonDisabled}
+                  >
+                    {selectedOption === option
+                      ? `${formatTime(countdown)}`
+                      : `${option} min`}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="d-timer-buttons">
+         
+        </div>
+      )}
       {showAlert && (
         <DonePopup
           message="You have updated yourself with all latest world news!"

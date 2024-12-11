@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import LocalNews from "../LocalNews/LocalNews";
 import WorldNews from "../WorldNews/WorldNews";
+import DesktopNewsTimer from "../NewsTimer/DesktopNewsTimer";
 import NewsTimer from "../NewsTimer/NewsTimer";
 import TechnologyNews from "../TechnologyNews/TechnologyNews";
 import BusinessNews from "../BusinessNews/BusinessNews";
@@ -52,7 +53,32 @@ const CenterArea = () => {
 
   return (
     <div className="d-center-area">
-      <div className="d-tabs">
+      {/* Hide tabs if "News Timer" is the active tab */}
+
+    {currentTab === "newsTimer" ? (
+        <div className="d-tabs-for-timer">
+        <button
+          className={`d-home-tab-for-timer ${currentTab === "local" ? "active" : ""}`}
+          onClick={() => setCurrentTab("local")}
+        >
+          Home
+        </button>
+        <button
+          className={`d-world-tab-for-timer ${currentTab === "world" ? "active" : ""}`}
+          onClick={() => setCurrentTab("world")}
+        >
+          World
+        </button>
+        <button
+          className={`d-news-timer-tab-for-timer ${
+            currentTab === "newsTimer" ? "active" : ""
+          }`}
+          onClick={() => setCurrentTab("newsTimer")}
+        >
+          News Timer
+        </button>
+      </div>
+    ) : (  <div className="d-tabs">
         <button
           className={`d-home-tab ${currentTab === "local" ? "active" : ""}`}
           onClick={() => setCurrentTab("local")}
@@ -73,12 +99,12 @@ const CenterArea = () => {
         >
           News Timer
         </button>
-      </div>
+      </div>)}
+
       <div className="d-news-card-area">
         {currentTab === "local" && <LocalNews />}
         {currentTab === "world" && <WorldNews />}
-        {/* Placeholder for News Timer */}
-        {currentTab === "newsTimer" && <NewsTimer />}
+        {currentTab === "newsTimer" && <DesktopNewsTimer />}
         {currentTab === "technology" && <TechnologyNews />}
         {currentTab === "business" && <BusinessNews />}
         {currentTab === "fashion" && <FashionNews />}
@@ -88,35 +114,40 @@ const CenterArea = () => {
         {currentTab === "health" && <HealthNews />}
         {currentTab === "science" && <ScienceNews />}
       </div>
-      <div className="d-menu-container">
-        <div className="d-category-icon-cont">
-          <h3 className="d-category">Category</h3>
-          <FontAwesomeIcon icon={faBars} className="d-menu-icon" />
+
+      {currentTab === "newsTimer" ? (
+        <div></div>
+      ) : (
+        <div className="d-menu-container">
+          <div className="d-category-icon-cont">
+            <h3 className="d-category">Category</h3>
+            <FontAwesomeIcon icon={faBars} className="d-menu-icon" />
+          </div>
+          <div className="d-menu-items">
+            {visibleStartIndex > 0 && (
+              <button onClick={handleScrollPrevious} className="d-scroll-arrow">
+                <FontAwesomeIcon icon={faArrowUp} className="d-arrow-up" />
+              </button>
+            )}
+            {menuItems
+              .slice(visibleStartIndex, visibleStartIndex + maxVisibleItems)
+              .map((item, index) => (
+                <Link
+                  key={index}
+                  onClick={() => setCurrentTab(item.tab)}
+                  className={item.className}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            {visibleStartIndex + maxVisibleItems < menuItems.length && (
+              <button onClick={handleScrollNext} className="d-scroll-arrow">
+                <FontAwesomeIcon icon={faArrowDown} className="d-arrow-down" />
+              </button>
+            )}
+          </div>
         </div>
-        <div className="d-menu-items">
-          {visibleStartIndex > 0 && (
-            <button onClick={handleScrollPrevious} className="d-scroll-arrow">
-              <FontAwesomeIcon icon={faArrowUp} className="d-arrow-up" />
-            </button>
-          )}
-          {menuItems
-            .slice(visibleStartIndex, visibleStartIndex + maxVisibleItems)
-            .map((item, index) => (
-              <Link
-                key={index}
-                onClick={() => setCurrentTab(item.tab)}
-                className={item.className}
-              >
-                {item.name}
-              </Link>
-            ))}
-          {visibleStartIndex + maxVisibleItems < menuItems.length && (
-            <button onClick={handleScrollNext} className="d-scroll-arrow">
-              <FontAwesomeIcon icon={faArrowDown} className="d-arrow-down" />
-            </button>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
