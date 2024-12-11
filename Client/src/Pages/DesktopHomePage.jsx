@@ -88,7 +88,7 @@ const DesktopHomePage = () => {
         </div>
       </div>*/}
 
-      <div className="footer">ff</div>
+     
     </div>
   );
 };

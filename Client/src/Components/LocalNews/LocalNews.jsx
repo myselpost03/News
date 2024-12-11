@@ -446,6 +446,7 @@ function LocalNews() {
           </>
         )}
       </div>
+   
       {showAlert && (
         <AlertPopup
           message="This feature will come soon for your country!"
